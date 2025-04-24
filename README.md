@@ -11,7 +11,7 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 - UI-based configuration for easy setup.
 - Backward compatibility with YAML configuration.
 - Shows minimum and maximum value.
-- Individually configurable segments, each with a lower and upper threshold, a color, and a replacement value.
+- Individually configurable segments, each with a lower and upper bound, a color, and a replacement value.
 - Unlimited number of segments.
 - Shows values of segment bounds.
 - Shows with or without a needle.
