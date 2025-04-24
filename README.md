@@ -6,9 +6,9 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 <br />
 
 <img alt="Gauge card configuration" src="config.png">  
-  
 <br />
 <br />
+
 ## Features
 - UI-based configuration for easy setup.
 - Backward compatibility with YAML configuration.
@@ -36,9 +36,9 @@ This is the recommended installation method.
 - In Home assistant got to *Settings* / *Dashboards*, press the three dots at the top right of the window and select *resources*.
 - Click on *Add resource* and enter /local/extended-gauge.js, then click on *Create*.
 - Hard restart the browser by pressing ctrl-F5.
+<br />
+<br />
 
-<br />
-<br />
 ## License
 
 This card is published under the GNU General Public License v3.0.
