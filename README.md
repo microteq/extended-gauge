@@ -1,9 +1,11 @@
 # Extended Gauge Card
 **Gauge Card with extended options.**
 
-The Whatsigram Messenger is an integration for Home assistant allowing you to send messages, notifications or alerts to your preferred messenger on your mobile phone. Whatsigram can send messeges to your Whatsapp, Signal or Telegram App using the free CallMeBot service.
+The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers additional options, such as displaying minimum and maximum values, an unlimited number of segments with lower and upper thresholds, display of threshold values, and more.
 <br />
 <br />
+
+<img alt="Gauge card configuration" src="config.png">
 
 ## Features
 - UI-based configuration for easy setup.
@@ -15,7 +17,6 @@ The Whatsigram Messenger is an integration for Home assistant allowing you to se
 - Shows with or without a needle.
 <br />
 
-<img alt="Gauge card configuration" src="config.png">
 
 ## Installation
 
