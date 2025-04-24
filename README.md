@@ -7,7 +7,8 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 
 <img alt="Gauge card configuration" src="config.png">  
   
-
+<br />
+<br />
 ## Features
 - UI-based configuration for easy setup.
 - Backward compatibility with YAML configuration.
@@ -17,7 +18,7 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 - Shows values of segment bounds.
 - Shows with or without a needle.
 <br />
-
+<br />
 
 ## Installation
 
@@ -36,6 +37,8 @@ This is the recommended installation method.
 - Click on *Add resource* and enter /local/extended-gauge.js, then click on *Create*.
 - Hard restart the browser by pressing ctrl-F5.
 
+<br />
+<br />
 ## License
 
 This card is published under the GNU General Public License v3.0.
