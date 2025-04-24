@@ -25,8 +25,8 @@ not available on HACS, yet.
 
 This is the recommended installation method.
 
-- Search for and install the Extended Gauge Card from HACS
-- Restart Home Assistant
+- Search for and install the Extended Gauge Card from HACS.
+- Hard restart the browser by pressing ctrl-F5.
 
 ### Manual
 - Download the .js file from the latest release
