@@ -23,7 +23,7 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 ## Installation
 
 ### HACS (recommended)
-not available on HACS, yet.
+Not available on HACS, yet.
 
 This is the recommended installation method.
 
