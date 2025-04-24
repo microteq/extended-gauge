@@ -31,6 +31,8 @@ This is the recommended installation method.
 - Hard restart the browser by pressing ctrl-F5.
 
 ### Manual
+Not available, yet.
+
 - Download the .js file from the latest release
 - Copy the file into the /config/www folder of your Home Assistant installation. If the www folder does not exist, create it.
 - In Home assistant got to *Settings* / *Dashboards*, press the three dots at the top right of the window and select *resources*.
