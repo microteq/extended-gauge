@@ -43,7 +43,7 @@ This is the recommended installation method.
 
 This card is published under the GNU General Public License v3.0.
 <br />
-<br/>
+<br />
 
 ## Attribution
 
