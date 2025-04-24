@@ -1,4 +1,4 @@
-# Extended Gauge Card
+# Extended Gauge Card for Home Assistant
 **Gauge Card with extended options.**
 
 The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers additional options, such as displaying minimum and maximum values, an unlimited number of segments with lower and upper bounds, display of threshold values, and more.
