@@ -43,14 +43,14 @@ Not available, yet.
 
 ## License
 
-This card is published under the GNU General Public License v3.0.
+The Extended Gauge Card is published under the GNU General Public License v3.0.
 <br />
 <br />
 <br />
 
 ## Attribution
 
-This Extended Gauge Card is inspired by the Home Assistant Gauge Card.
+This card is inspired by the Home Assistant Gauge Card.
 <br />
 <br />
 <br />
