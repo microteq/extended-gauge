@@ -50,7 +50,7 @@ This card is published under the GNU General Public License v3.0.
 
 ## Attribution
 
-This card is inspired by the Home Assistant Gauge Card.
+This Extended Gauge Card is inspired by the Home Assistant Gauge Card.
 <br />
 <br />
 <br />
