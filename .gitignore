@@ -31,3 +31,6 @@ __pycache__
 #Debug files
 dist
 node_modules
+
+# Code
+src/config-framework/code
