@@ -33,4 +33,5 @@ dist
 node_modules
 
 # Config Framework Code Symlink
-src/config-framework/code/
+src/config-framework/code
+
