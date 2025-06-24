@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+    {
+        "name": "Debug Custom Card in Chrome",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:8123",
+        "webRoot": "${workspaceFolder}/dist",
+        "sourceMaps": true,
+        "sourceMapPathOverrides": 
+        {
+            "webpack:///src/*": "${workspaceFolder}/src/*",
+        },
+        "trace": true
+      }
+
+    ]
+}

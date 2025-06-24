@@ -1,0 +1,33 @@
+{
+  "editor": 
+  {
+    "entity_settings": "Edit entity settings",
+    "name": "Name",
+    "unit_of_measurement": "Unit of measurement",
+    "conversion_factor": "Conversion factor",
+    "decimals": "Number of decimals",
+    "thousand_separator": "Thousands separator",
+    "decimal_separator": "Decimal separator",
+    "min_value": "Minimum displayed value",
+    "max_value": "Maximum displayed value",
+    "color_value": "Color for value display",
+    "color_background": "Background color (no value)",
+    "show_needle": "Show needle",
+    "show_entity_name": "Show entity name",
+    "show_min_max_values": "Show min / max values",
+    "show_segment_labels": "Show segment thresholds",
+    "add_segment": "Add segment",
+    "edit_segment": "Edit segment",
+    "segment_list": "Segments",
+    "segment_list_empty": "No segments defined",
+    "segment_lower": "Lower bound",
+    "segment_upper": "Upper bound",
+    "segment_color": "Segment color",
+    "segment_value_replacement": "Override value"
+  },
+  "error": 
+  {
+    "range_lower_greater_than_upper": "Lower range bound is greater than the upper bound.",
+    "value_lower_greater_than_upper": "Minimum displayed value is greater than the maximum value."
+  }
+}

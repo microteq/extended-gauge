@@ -1,0 +1,34 @@
+{
+    "editor": 
+    {
+      "entity_settings": "Modifier les paramètres de l'entité",
+      "name": "Nom",
+      "unit_of_measurement": "Unité de mesure",
+      "conversion_factor": "Facteur de conversion",
+      "decimals": "Nombre de décimales",
+      "thousand_separator": "Séparateur de milliers",
+      "decimal_separator": "Séparateur décimal",
+      "min_value": "Valeur minimale affichée",
+      "max_value": "Valeur maximale affichée",
+      "color_value": "Couleur de la valeur",
+      "color_background": "Couleur de fond (pas de valeur)",
+      "show_needle": "Afficher l'aiguille",
+      "show_entity_name": "Afficher le nom de l'entité",
+      "show_min_max_values": "Afficher les valeurs min / max",
+      "show_segment_labels": "Afficher les limites des segments",
+      "add_segment": "Ajouter un segment",
+      "edit_segment": "Modifier le segment",
+      "segment_list": "Segments",
+      "segment_list_empty": "Aucun segment défini",
+      "segment_lower": "Limite inférieure",
+      "segment_upper": "Limite supérieure",
+      "segment_color": "Couleur du segment",
+      "segment_value_replacement": "Remplacer la valeur"
+    },
+    "error": 
+    {
+      "range_lower_greater_than_upper": "La limite inférieure est supérieure à la limite supérieure.",
+      "value_lower_greater_than_upper": "La valeur minimale affichée est supérieure à la valeur maximale."
+    }
+  }
+  

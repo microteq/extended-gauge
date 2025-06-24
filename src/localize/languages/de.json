@@ -1,0 +1,33 @@
+{
+  "editor": 
+  {
+    "entity_settings": "Einstellungen der Entität bearbeiten",
+    "name": "Name",
+    "unit_of_measurement": "Masseinheit",
+    "conversion_factor": "Umrechnungsfaktor",
+    "decimals": "Anzahl Kommastellen",
+    "thousand_separator": "Tausendertrennzeichen",
+    "decimal_separator": "Dezimaltrennzeichen",
+    "min_value": "Minimaler angezeigter Wert",
+    "max_value": "Maximaler angezeigter Wert",
+    "color_value": "Farbe für die Anzeige des Wertes",
+    "color_background": "Hintergrundfarbe (kein Wert)",
+    "show_needle": "Nadel anzeigen",
+    "show_entity_name": "Name der Entität anzeigen",
+    "show_min_max_values": "Min. / Max. Werte anzeigen",
+    "show_segment_labels": "Segmentgrenzwerte anzeigen",
+    "add_segment": "Segment hinzufügen",
+    "edit_segment": "Segment bearbeiten",
+    "segment_list": "Segmente",
+    "segment_list_empty": "Keine Segmente definiert",
+    "segment_lower": "Untere Grenze",
+    "segment_upper": "Obere Grenze",
+    "segment_color": "Farbe de Segments",
+    "segment_value_replacement": "Wert überschreiben"
+  },
+  "error": 
+  {
+      "range_lower_greater_than_upper":"Die untere Bereichsgrenze ist grösser als die obere.",
+      "value_lower_greater_than_upper":"Der angezeigte Minimalwert ist grösser als der Maximalwert."
+  }
+}
