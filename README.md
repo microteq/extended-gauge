@@ -23,7 +23,7 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 ## Installation
 
 ### HACS (recommended)
-Not available on HACS, yet.
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=microteq&repository=extended-gauge&category=plugin)
 
 This is the recommended installation method.
 
