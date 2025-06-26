@@ -5,7 +5,8 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 <br />
 <br />
 
-![config](https://github.com/user-attachments/assets/eb075d0d-866c-4d5e-ba3a-5d2801de5f28)
+![config](https://github.com/user-attachments/assets/b4133a1e-9e61-424a-9e89-2f9543bad6ef)
+
 
 <br />
 <br />
