@@ -487,7 +487,7 @@ static styles = css`
       display: flex;
       align-items: center;
       position: relative;
-      padding-top: 3px;
+      padding-top: 10px;
     }
 
 

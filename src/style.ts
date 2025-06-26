@@ -6,17 +6,20 @@ export const styles = css`
     --clickable-cursor: default;
   }
 
-  ha-gauge
-  {
-    width: 100%;
+  ha-card {
     height: 100%;
-  }
+    overflow: hidden;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+}
 
   .card-content-container 
   {
-    width: 90%;
-    height: 90%;
-    margin: 0 auto;
+    width: 100%;
     padding-bottom: 24px;
   }
 

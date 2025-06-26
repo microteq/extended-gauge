@@ -32,6 +32,82 @@ registerCustomCard(
 
 
 /*****************************************************************************************************************************/
+/* Purpose: Interface for demo timer management
+/* History: 26-JUN-2025 D. Geisenhoff   Created
+/*****************************************************************************************************************************/
+interface DemoTimerManager 
+{
+  timerId: number | null;
+  demoValue: number,
+  callbacks: Set<() => void>;
+  startTimer: () => void;
+  stopTimer: () => void;
+  registerCallback: (callback: () => void) => void;
+  unregisterCallback: (callback: () => void) => void;
+}
+
+
+/*****************************************************************************************************************************/
+/* Purpose: Sigleton for demo timer management
+/* History: 26-JUN-2025 D. Geisenhoff   Created
+/*****************************************************************************************************************************/
+const DemoTimerManager: DemoTimerManager = 
+{
+  timerId: null,
+  demoValue: 50,
+  callbacks: new Set<() => void>(),
+  startTimer() 
+  {
+    if (this.timerId === null) 
+    {
+      console.log('Timer gestartet');
+      this.timerId = window.setInterval(() => 
+      {
+        this.callbacks.forEach((callback) => callback());
+      }, 5000);
+    }
+  },
+  stopTimer() 
+  {
+    if (this.timerId !== null) 
+    {
+//      console.log('Timer stopped');
+      window.clearInterval(this.timerId);
+      this.timerId = null;
+    }
+  },
+  registerCallback(callback: () => void) 
+  {
+    if (this.callbacks.has(callback)) 
+    {
+//      console.log('Callback already registered, no adding needed');
+      return;
+    }
+    this.callbacks.add(callback);
+    console.log('Callback registered, count:', this.callbacks.size);
+    this.startTimer();
+  },
+  unregisterCallback(callback: () => void) 
+  {
+    if (this.callbacks.has(callback)) 
+    {
+      this.callbacks.delete(callback);
+//      console.log('Callback removed, count:', this.callbacks.size);
+    } 
+    else 
+    {
+//      console.log('Callback not found, removing not needed');
+    }
+    // Stop timer, if no more callbacks registered
+    if (this.callbacks.size === 0) 
+    {
+      this.stopTimer();
+    }
+  }
+};
+
+
+/*****************************************************************************************************************************/
 /* Purpose: Main display element of the custom card (extended gauge card)
 /* History: 18-FEB-2025 D. Geisenhoff   Created
 /*****************************************************************************************************************************/
@@ -42,7 +118,7 @@ export class ExtendedGaugeCard extends LitElement
   @state() private _config: ExtendedGaugeConfigData = {type: `custom:extended-gauge-card`};
   private _minValue: number = 0;
   private _maxValue: number = 0;
-  public isInEditMode: boolean = false;
+  //public isInEditMode: boolean = false;
 
 
   /*****************************************************************************************************************************/
@@ -52,8 +128,7 @@ export class ExtendedGaugeCard extends LitElement
   public connectedCallback() 
   {
     super.connectedCallback();
-    //void loadHaComponents();
-    this.isInEditMode = this.checkEditMode()
+    //this.isInEditMode = this.isEditMode()
     // Initialize gauge values
     const value = this._getValue();
     if (this._getValue() != undefined)
@@ -66,6 +141,20 @@ export class ExtendedGaugeCard extends LitElement
       this._setMinValue(value);
       this._setMaxValue(value);
     }
+    // Start demo value timer, if no entity has been selected
+    if (this._config.entity?.entity == null)
+        DemoTimerManager.registerCallback(this._updateDemoValue);
+  }
+
+
+  /*****************************************************************************************************************************/
+  /* Purpose: Called when card unloads from DOM
+  /* History: 26-JUN-2025 D.Geisenhoff   Created
+  /*****************************************************************************************************************************/
+  public disconnectedCallback()
+  {
+    super.disconnectedCallback();
+    DemoTimerManager.unregisterCallback(this._updateDemoValue);
   }
 
 
@@ -80,7 +169,6 @@ export class ExtendedGaugeCard extends LitElement
       ...config,
     };
   }
-
 
 
   /*****************************************************************************************************************************/
@@ -116,38 +204,38 @@ export class ExtendedGaugeCard extends LitElement
 
 
   /*****************************************************************************************************************************/
-  /* Purpose: Check if card is in ui edit mode
+  /* Purpose: Return true if card is in ui edit mode
   /* History: 10-MAR-2025 D.Geisenhoff   Created
   /*****************************************************************************************************************************/
-  private checkEditMode() 
-  {
-    const checkForEditMode = (element) => 
-    {
-      // Check current element
-      if (element.classList && (element.classList.contains('edit-mode') || element.classList.contains('element-preview'))) 
-      {
-        return true;
-      }
-      // Check parents in mormal DOM
-      if (element.parentNode) 
-      {
-        return checkForEditMode(element.parentNode);
-      }
-      // Pass shadow limit
-      if (element.nodeType === 11 && element.host) 
-      { 
-        return checkForEditMode(element.host);
-      }
-      // If we are in a shadow root, change to host
-      if (element.host) 
-      {
-        return checkForEditMode(element.host);
-      }
-      // Nothing found
-      return false;
-    };
-    return checkForEditMode(this);
-  }
+  // private isEditMode() 
+  // {
+  //   const checkForEditMode = (element) => 
+  //   {
+  //     // Check current element
+  //     if (element.classList && (element.classList.contains('edit-mode') || element.classList.contains('element-preview'))) 
+  //     {
+  //       return true;
+  //     }
+  //     // Check parents in mormal DOM
+  //     if (element.parentNode) 
+  //     {
+  //       return checkForEditMode(element.parentNode);
+  //     }
+  //     // Pass shadow limit
+  //     if (element.nodeType === 11 && element.host) 
+  //     { 
+  //       return checkForEditMode(element.host);
+  //     }
+  //     // If we are in a shadow root, change to host
+  //     if (element.host) 
+  //     {
+  //       return checkForEditMode(element.host);
+  //     }
+  //     // Nothing found
+  //     return false;
+  //   };
+  //   return checkForEditMode(this);
+  // }
 
 
   /*****************************************************************************************************************************/
@@ -312,12 +400,13 @@ export class ExtendedGaugeCard extends LitElement
   /* Purpose: Get random value for showing a demo gauge, if no entity is selected
   /* History: 16-APR-2025 D.Geisenhoff  Created
   /*******************************************************************************************************************************/
-  private _getRandomValue(): number
+  private _updateDemoValue = () => 
   {
-    return this._minValue + Math.round((this._maxValue - this._minValue) * Math.random());
+    DemoTimerManager.demoValue = this._minValue + Math.round((this._maxValue - this._minValue) * Math.random());
+    this.requestUpdate();
   }
-
-
+  
+  
   /*******************************************************************************************************************************/
   /* Purpose: Render the frontend card
   /* History: 17-FEB-2025 D.Geisenhoff  Created
@@ -337,7 +426,7 @@ export class ExtendedGaugeCard extends LitElement
     if (this._config.entity?.entity == null || this.hass.states[this._config.entity?.entity] == undefined)
     {
       config = this._getDemoData();
-      value = this._getRandomValue();
+      value = DemoTimerManager.demoValue;
     }
     else
     {
@@ -345,13 +434,13 @@ export class ExtendedGaugeCard extends LitElement
       value = this._getValue();
       this._setMinValue(value);
       this._setMaxValue(value);
+//      DemoTimerManager.unregisterCallback(this._updateDemoValue);
     }
     return html`
       <ha-card
-        class=${config.full_size ? "full-size" : ""}
-        style=${config.style_ha_card ? config.style_ha_card : "text-align: center !important;"}>
+        style="text-align: center !important;">
         <h1 class="card-header">${config.title?.title}</h1>
-        <div class="card-content-container" >
+        <div class="card-content-container">
           <microteq-extended-gauge
               .locale=${this.hass.locale}
               min=${this._minValue == Infinity ? -999999999 : this._minValue}
