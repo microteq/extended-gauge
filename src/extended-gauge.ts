@@ -48,7 +48,7 @@ interface DemoTimerManager
 
 
 /*****************************************************************************************************************************/
-/* Purpose: Sigleton for demo timer management
+/* Purpose: Singleton for demo timer management
 /* History: 26-JUN-2025 D. Geisenhoff   Created
 /*****************************************************************************************************************************/
 const DemoTimerManager: DemoTimerManager = 
