@@ -13,6 +13,13 @@
             "webpack:///src/*": "${workspaceFolder}/src/*",
         },
         "trace": true
+      },
+      {
+        "name": "Debug custom Card in Firefox",
+        "type": "firefox",
+        "request": "launch",
+        "url": "http://localhost:8123/lovelace/0",
+        "webRoot": "${workspaceFolder}/dist",
       }
 
     ]

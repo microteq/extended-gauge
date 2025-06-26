@@ -12,7 +12,7 @@ export const styles = css`
     height: 100%;
   }
 
-  .gauge-container 
+  .card-content-container 
   {
     width: 90%;
     height: 90%;

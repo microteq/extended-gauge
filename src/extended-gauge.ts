@@ -82,6 +82,7 @@ export class ExtendedGaugeCard extends LitElement
   }
 
 
+
   /*****************************************************************************************************************************/
   /* Purpose: Get UI editor
   /* History: 18-FEB-2025 D. Geisenhoff   Created
@@ -350,7 +351,7 @@ export class ExtendedGaugeCard extends LitElement
         class=${config.full_size ? "full-size" : ""}
         style=${config.style_ha_card ? config.style_ha_card : "text-align: center !important;"}>
         <h1 class="card-header">${config.title?.title}</h1>
-        <div class="gauge-container" >
+        <div class="card-content-container" >
           <microteq-extended-gauge
               .locale=${this.hass.locale}
               min=${this._minValue == Infinity ? -999999999 : this._minValue}

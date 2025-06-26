@@ -273,7 +273,7 @@ export class ExtendedGauge extends LitElement
             gaugeValueColor = segment.color;
         })
     }
-    return svg`
+    return html`
       <div class="gauge-container">
       <svg viewBox="-50 -50 130 55" class="gauge">
       <g transform="translate(15 5)">
