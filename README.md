@@ -5,7 +5,8 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 <br />
 <br />
 
-<img alt="Gauge card configuration" src="https://github.com/microteq/extended-gauge/blob/main/config.png">  
+![config](https://github.com/user-attachments/assets/b18a13f6-ba9f-4b5c-93ad-fed974638a70)
+
 <br />
 <br />
 
