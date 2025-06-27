@@ -162,7 +162,7 @@ export const entityConfigSchema =
 [
   {
     name: "entity",
-    selector: { entity: { filter: {domain: ["sensor"]}}},
+    selector: { entity: { filter: {domain: ["sensor","number","input_number"]}}},
   },
 ];
 

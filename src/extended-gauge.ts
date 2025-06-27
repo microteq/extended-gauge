@@ -159,6 +159,29 @@ export class ExtendedGaugeCard extends LitElement
 
 
   /*****************************************************************************************************************************/
+  /* Purpose: The grid options of your card. Home Assistant uses this to set the card size in sections view.
+  /* History: 18-FEB-2025 D. Geisenhoff   Created
+  /*****************************************************************************************************************************/
+  getGridOptions() 
+  {
+    return {
+      max_columns: 33, // Standard-Spaltenanzahl
+    };
+  }
+
+
+  /*****************************************************************************************************************************/
+  /* Purpose: The height of your card. Home Assistant uses this to automatically distribute all cards over the available columns 
+  /*          in masonry view.
+  /* History: 18-FEB-2025 D. Geisenhoff   Created
+  /*****************************************************************************************************************************/
+  public getCardSize(): Promise<number> | number 
+  {
+    return 3;
+  }
+
+
+  /*****************************************************************************************************************************/
   /* Purpose: Open the UI editor
   /* History: 18-FEB-2025 D.Geisenhoff   Created
   /*****************************************************************************************************************************/
@@ -190,17 +213,7 @@ export class ExtendedGaugeCard extends LitElement
   {
     return getDefaultConfig(hass);
   }
-
-  
-  /*****************************************************************************************************************************/
-  /* Purpose: The height of your card. Home Assistant uses this to automatically distribute all cards over the available columns 
-  /*          in masonry view.
-  /* History: 18-FEB-2025 D. Geisenhoff   Created
-  /*****************************************************************************************************************************/
-  public getCardSize(): Promise<number> | number 
-  {
-    return 3;
-  }
+ 
 
 
   /*****************************************************************************************************************************/
@@ -362,15 +375,15 @@ export class ExtendedGaugeCard extends LitElement
     if (this._config.main?.max_value != undefined) 
       this._maxValue = this._config.main?.max_value
     else
-      this._maxValue = 100;
+      this._maxValue = this._config.entity?.settings?.conversion_factor == undefined ? 100 : 100 / this._config.entity?.settings?.conversion_factor;
     if (this._maxValue <= this._minValue)
-      this._maxValue = this._minValue + 100
+      this._maxValue = this._minValue + (this._config.entity?.settings?.conversion_factor == undefined ? 100 : 100 / this._config.entity?.settings?.conversion_factor);
     const rootStyles = getComputedStyle(document.documentElement);
     const segment_list : SegmentPageConfigData[] = [];
     const settings1: SegmentSettingsConfigData = 
     {
       segment_lower: this._config?.segment_list?.[0]?.settings?.segment_lower || this._config?.segment_list?.[0]?.settings?.segment_upper ? this._config?.segment_list?.[0]?.settings?.segment_lower : this._minValue, 
-      segment_upper: this._config?.segment_list?.[0]?.settings?.segment_lower || this._config?.segment_list?.[0]?.settings?.segment_upper ? this._config?.segment_list?.[0]?.settings?.segment_upper : this._maxValue / 3, 
+      segment_upper: this._config?.segment_list?.[0]?.settings?.segment_lower || this._config?.segment_list?.[0]?.settings?.segment_upper ? this._config?.segment_list?.[0]?.settings?.segment_upper : this._minValue + (this._maxValue-this._minValue) / 3, 
       segment_color: this._config?.segment_list?.[0]?.settings?.segment_color ? this._config.segment_list[0].settings?.segment_color : hexToRgb(rootStyles.getPropertyValue('--primary-color')),
       segment_value_replacement: this._config?.segment_list?.[0]?.settings?.segment_value_replacement ? this._config?.segment_list?.[0]?.settings?.segment_value_replacement : undefined
     };
@@ -381,8 +394,8 @@ export class ExtendedGaugeCard extends LitElement
       });
     const settings2: SegmentSettingsConfigData = 
     {
-      segment_lower: this._config?.segment_list?.[1]?.settings?.segment_lower || this._config?.segment_list?.[1]?.settings?.segment_upper ? this._config?.segment_list?.[1]?.settings?.segment_lower : this._maxValue * 0.7, 
-      segment_upper: this._config?.segment_list?.[1]?.settings?.segment_lower || this._config?.segment_list?.[1]?.settings?.segment_upper ? this._config?.segment_list?.[1]?.settings?.segment_upper : this._maxValue * 0.85, 
+      segment_lower: this._config?.segment_list?.[1]?.settings?.segment_lower || this._config?.segment_list?.[1]?.settings?.segment_upper ? this._config?.segment_list?.[1]?.settings?.segment_lower : this._minValue+(this._maxValue-this._minValue) * 0.7, 
+      segment_upper: this._config?.segment_list?.[1]?.settings?.segment_lower || this._config?.segment_list?.[1]?.settings?.segment_upper ? this._config?.segment_list?.[1]?.settings?.segment_upper : this._minValue+(this._maxValue-this._minValue) * 0.85, 
       segment_color: this._config?.segment_list?.[1]?.settings?.segment_color ? this._config.segment_list[1].settings?.segment_color : hexToRgb(rootStyles.getPropertyValue('--accent-color')),
       segment_value_replacement: this._config?.segment_list?.[1]?.settings?.segment_value_replacement ? this._config?.segment_list?.[1]?.settings?.segment_value_replacement : undefined
     };

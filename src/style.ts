@@ -20,12 +20,11 @@ export const styles = css`
   .card-content-container 
   {
     width: 100%;
-    padding-bottom: 24px;
   }
 
   .card-header
   {
-    padding: 24px 16px 10px;
     line-height: normal;
+    padding: 0;
   }
 `;

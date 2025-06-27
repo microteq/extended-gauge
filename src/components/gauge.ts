@@ -493,8 +493,6 @@ static styles = css`
 
     .label
     {
-      overflow: hidden;
-      max-width: 50%;
       font-size: 0.9rem;
       color: var(--primary-text-color);    
       margin: auto;
@@ -509,6 +507,7 @@ static styles = css`
       left: 19.5%;
       bottom: -18%;
       transform: translate(-50%, 0%);
+      overflow: visible;
     }
 
 
@@ -520,6 +519,7 @@ static styles = css`
       right: 19.5%;
       bottom: -18%;
       transform: translate(50%, 0%);
+      overflow: visible;
     }
 
 
