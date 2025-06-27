@@ -87,7 +87,7 @@ Add segments with threshold values to your gauge to highlight specific value ran
 
 | Field name | Description |
 | ---------- | ----------- |
-| *Title* | The title or name of the segment. This is not displayed and is for your reference only. |
+| *Title* | The title or name of the segment. This is not displayed and is for your reference only. To avoid confusion about the purpose of each segment when multiple segments are used, you can only add a new segment after you have given a name to the previous one.|
 | *Lower bound* | The lower bound of the segment. If not specified, the gauge's minimum value will be used by default. |
 | *Upper bound* | The upper bound of the segment. If not specified, the gauge's maximum value will be used by default. |
 | *Segment color* | The color in which the segment should be displayed. |
