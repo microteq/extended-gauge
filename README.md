@@ -1,3 +1,8 @@
+[![License](https://img.shields.io/github/license/microteq/extended-gauge.svg)](LICENSE)
+[![HACS Supported](https://img.shields.io/badge/HACS-Supported-green.svg)](https://github.com/custom-components/hacs)
+![Downloads](https://img.shields.io/github/downloads/microteq/extended-gauge/total)
+![GitHub Activity](https://img.shields.io/github/commit-activity/y/microteq/extended-gauge.svg?label=commits)
+[![Stable](https://img.shields.io/github/release/microteq/extended-gauge.svg)](https://github.com/microteq/extended-gauge/releases/latest)
 # Extended Gauge Card for Home Assistant
 **A Home Assistant Gauge Card with extended functions and options.**
 
