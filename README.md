@@ -52,79 +52,45 @@ After installing your Extended Gauge Card, edit your dashboard or create a new o
 
 ### Configuration
 
-#### Entity
-First, you need to select an entity that contains the numeric value you want to display. As long as no entity is selected, demo values will be shown and will update every 5 seconds.
-
-#### Title
-If you want the card to have a title, you can enter it in this field.
-
-#### Minimum displayed value
-The value at which the gauge display begins.
-
-#### Maximum displayed value
-The value at which the gauge display ends.
-
-#### Color for value display
-The default background color when the needle is shown, or the color of the current value display if the needle is hidden.
-
-#### Background color (no value)
-The default background color of the gauge when the needle is hidden.
-
-#### Show needle
-Toggle to show or hide the needle.
-
-#### Show entity name
-Toggle to show or hide the entity name below the value.
-
-#### Show min / max values
-Toggle to show or hide the gauge’s minimum and maximum values.
-
-#### Show segment thresholds
-Toggle to show or hide the segment threshold values.
-<br/>
+| Field name | Description |
+| ---------- | ----------- |
+| *Entity* | First, you need to select an entity that contains the numeric value you want to display. As long as no entity is selected, demo values will be shown and will update every 5 seconds. |
+| *Title* | If you want the card to have a title, you can enter it in this field. |
+| *Minimum&nbsp;displayed&nbsp;value* | The value at which the gauge display begins. |
+| *Maximum&nbsp;displayed&nbsp;value* | The value at which the gauge display ends. |
+| *Color&nbsp;for&nbsp;value&nbsp;display* | The default background color when the needle is shown, or the color of the current value display if the needle is hidden. |
+| *Background&nbsp;color&nbsp;(no&nbsp;value)* | The default background color when the needle is shown, or the color of the current value display if the needle is hidden. |
+| *Show needle* | Toggle to show or hide the needle. |
+| *Show entity name* | Toggle to show or hide the entity name below the value. |
+| *Show min&nbsp;/&nbsp;max values* | Toggle to show or hide the gauge’s minimum and maximum values. |
+| *Show&nbsp;segment&nbsp;thresholds* | Toggle to show or hide the segment threshold values. |
+<br />
 
 ### Editing the entity
 To gain more control over how the entity value is displayed, click the edit button to the right of the selected entity Id.
 
-#### Name
-Give your entity a custom name. This name will be displayed below the value instead of the entity Id.
-
-#### Unit of measurement
-The unit that should be displayed next to the value.
-
-#### Conversion factor
-The value provided by the entity will be divided by this number. For example, if the entity provides power in watts, entering a conversion factor of 1000 will display the value in kilowatts.
-
-#### Number of decimals
-The number of decimal places to be displayed.
-
-#### Thousands separator
-The character to be used as the thousands separator.
-
-#### Decimal separator
-The character to be used as the decimal separator.
-<br/>
+| Field name | Description |
+| ---------- | ----------- |
+| *Name* | Give your entity a custom name. This name will be displayed below the value instead of the entity Id. |
+| *Unit&nbsp;of&nbsp;measurement* | The unit that should be displayed next to the value. |
+| *Conversion factor* | The value provided by the entity will be divided by this number. For example, if the entity provides power in watts, entering a conversion factor of 1000 will display the value in kilowatts. |
+| *Number of decimals* | The number of decimal places to be displayed. |
+| *Thousands separator* | The character to be used as the thousands separator. |
+| *Decimal separator* | The character to be used as the decimal separator. |
+<br />
 
 ### Adding segments
 Add segments with threshold values to your gauge to highlight specific value ranges. Click “Add segment” or the plus icon to add a new segment. You can add as many segments as you like, but adding too many may reduce the gauge’s readability.
 
-#### Title
-The title or name of the segment. This is not displayed and is for your reference only.
-
-#### Lower bound
-The lower bound of the segment. If not specified, the gauge's minimum value will be used by default.
-
-#### Upper bound
-The upper bound of the segment. If not specified, the gauge's maximum value will be used by default.
-
-#### Segment color
-The color in which the segment should be displayed.
-
-#### Override value
-A text that will be shown instead of the entity’s value when it falls within the segment bounds.
+| Field name | Description |
+| ---------- | ----------- |
+| *Title* | The title or name of the segment. This is not displayed and is for your reference only. |
+| *Lower bound* | The lower bound of the segment. If not specified, the gauge's minimum value will be used by default. |
+| *Upper bound* | The upper bound of the segment. If not specified, the gauge's maximum value will be used by default. |
+| *Segment color* | The color in which the segment should be displayed. |
+| *Override&nbsp;value* | A text that will be shown instead of the entity’s value when it falls within the segment bounds. |
 <br />
 <br />
-<br/>
 
 ## License
 
