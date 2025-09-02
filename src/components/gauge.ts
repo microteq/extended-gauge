@@ -15,6 +15,76 @@ import {
 import { customElement, property, query, state } from "lit-element";
 
 
+/*****************************************************************************************************************************/
+/* Purpose: Interface for demo timer management
+/* History: 26-JUN-2025 D. Geisenhoff   Created
+/*****************************************************************************************************************************/
+interface DemoTimerManager 
+{
+  timerId: number | null;
+  demoValue: number,
+  callbacks: Set<() => void>;
+  startTimer: () => void;
+  stopTimer: () => void;
+  registerCallback: (callback: () => void) => void;
+  unregisterCallback: (callback: () => void) => void;
+}
+
+
+/*****************************************************************************************************************************/
+/* Purpose: Singleton for demo timer management
+/* History: 26-JUN-2025 D. Geisenhoff   Created
+/*****************************************************************************************************************************/
+export const DemoTimerManager: DemoTimerManager = 
+{
+  timerId: null,
+  demoValue: 50,
+  callbacks: new Set<() => void>(),
+  startTimer() 
+  {
+    if (this.timerId === null) 
+    {
+      this.timerId = window.setInterval(() => 
+      {
+        this.callbacks.forEach((callback) => callback());
+      }, 5000);
+    }
+  },
+  stopTimer() 
+  {
+    if (this.timerId !== null) 
+    {
+      window.clearInterval(this.timerId);
+      this.timerId = null;
+    }
+  },
+  registerCallback(callback: () => void) 
+  {
+    if (this.callbacks.has(callback)) 
+    {
+      return;
+    }
+    this.callbacks.add(callback);
+    this.startTimer();
+  },
+  unregisterCallback(callback: () => void) 
+  {
+    if (this.callbacks.has(callback)) 
+    {
+      this.callbacks.delete(callback);
+    } 
+    else 
+    {
+    }
+    // Stop timer, if no more callbacks registered
+    if (this.callbacks.size === 0) 
+    {
+      this.stopTimer();
+    }
+  }
+};
+
+
 declare global 
 {
   /*****************************************************************************************************************************/
@@ -34,7 +104,8 @@ declare global
 /*            upper:            Upper bound of segment range.
 /*            color:            Color of segment range (string format i.e. #00ff00)
 /*            valueReplacement: A string that replaces the displayed value, when the value is inside the selected range.
-/* History:   04-APR-2025 D.Geisenhoff   Created
+/*            valueReplacementOutOfRange: A string that replaces the displayed value, when the value is outside the selected range.
+/* History:   04-JUL-2025 D.Geisenhoff   Created
 /******************************************************************************************************************************************/
 export interface GaugeSegment 
 {
@@ -42,6 +113,7 @@ export interface GaugeSegment
   upper?: number;
   color: string;
   valueReplacement?: string;
+  valueReplacementOutOfRange?: string;
 }
 
 
@@ -89,8 +161,7 @@ export class ExtendedGauge extends LitElement
   @state() private _valueAngle = 0;
   @state() private _updated = false;
   @state() private _segment_value_replacement? = "";
-
-
+  
 
   /*****************************************************************************************************************************/
   /* Purpose: Constructor
@@ -239,11 +310,15 @@ export class ExtendedGauge extends LitElement
   {
     if (this.segments) 
     {
-      for (let i = this.segments.length - 1; i >= 0; i--) 
+      for (let i: number = this.segments.length - 1; i >= 0; i--) 
       {
-        if (this.value >= this.segments[i].lower! && this.value <= this.segments[i].upper!) 
+        if (this.value >= this.segments[i].lower! && this.value <= this.segments[i].upper! && this.segments[i].valueReplacement != undefined) 
         {
           return this.segments[i].valueReplacement;
+        }
+        if ((this.value < this.segments[i].lower! || this.value > this.segments[i].upper!) && this.segments[i].valueReplacementOutOfRange != undefined) 
+        {
+          return this.segments[i].valueReplacementOutOfRange;
         }
       }
     }

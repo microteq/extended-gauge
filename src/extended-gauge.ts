@@ -14,7 +14,7 @@ import { getDefaultConfig } from "./utils/get-default-config";
 import { css } from 'lit';
 import { hexToRgb, rgbToHex } from "./utils/convertColor";
 import "./components/gauge";
-import { GaugeSegment } from "./components/gauge";
+import { DemoTimerManager, GaugeSegment } from "./components/gauge";
 import { registerCustomCard } from "./utils/register-custom-card";
 
 
@@ -29,82 +29,6 @@ registerCustomCard(
   description:
     "Extended Gauge Card with multiple segments.",
 });
-
-
-/*****************************************************************************************************************************/
-/* Purpose: Interface for demo timer management
-/* History: 26-JUN-2025 D. Geisenhoff   Created
-/*****************************************************************************************************************************/
-interface DemoTimerManager 
-{
-  timerId: number | null;
-  demoValue: number,
-  callbacks: Set<() => void>;
-  startTimer: () => void;
-  stopTimer: () => void;
-  registerCallback: (callback: () => void) => void;
-  unregisterCallback: (callback: () => void) => void;
-}
-
-
-/*****************************************************************************************************************************/
-/* Purpose: Singleton for demo timer management
-/* History: 26-JUN-2025 D. Geisenhoff   Created
-/*****************************************************************************************************************************/
-const DemoTimerManager: DemoTimerManager = 
-{
-  timerId: null,
-  demoValue: 50,
-  callbacks: new Set<() => void>(),
-  startTimer() 
-  {
-    if (this.timerId === null) 
-    {
-      console.log('Timer gestartet');
-      this.timerId = window.setInterval(() => 
-      {
-        this.callbacks.forEach((callback) => callback());
-      }, 5000);
-    }
-  },
-  stopTimer() 
-  {
-    if (this.timerId !== null) 
-    {
-//      console.log('Timer stopped');
-      window.clearInterval(this.timerId);
-      this.timerId = null;
-    }
-  },
-  registerCallback(callback: () => void) 
-  {
-    if (this.callbacks.has(callback)) 
-    {
-//      console.log('Callback already registered, no adding needed');
-      return;
-    }
-    this.callbacks.add(callback);
-    console.log('Callback registered, count:', this.callbacks.size);
-    this.startTimer();
-  },
-  unregisterCallback(callback: () => void) 
-  {
-    if (this.callbacks.has(callback)) 
-    {
-      this.callbacks.delete(callback);
-//      console.log('Callback removed, count:', this.callbacks.size);
-    } 
-    else 
-    {
-//      console.log('Callback not found, removing not needed');
-    }
-    // Stop timer, if no more callbacks registered
-    if (this.callbacks.size === 0) 
-    {
-      this.stopTimer();
-    }
-  }
-};
 
 
 /*****************************************************************************************************************************/
@@ -160,7 +84,7 @@ export class ExtendedGaugeCard extends LitElement
 
   /*****************************************************************************************************************************/
   /* Purpose: The grid options of your card. Home Assistant uses this to set the card size in sections view.
-  /* History: 18-FEB-2025 D. Geisenhoff   Created
+  /* History: 27-JUN-2025 D. Geisenhoff   Created
   /*****************************************************************************************************************************/
   getGridOptions() 
   {
@@ -450,15 +374,14 @@ export class ExtendedGaugeCard extends LitElement
 //      DemoTimerManager.unregisterCallback(this._updateDemoValue);
     }
     return html`
-      <ha-card
-        style="text-align: center !important;">
+      <ha-card style="text-align: center !important;">
         <h1 class="card-header">${config.title?.title}</h1>
         <div class="card-content-container">
           <microteq-extended-gauge
               .locale=${this.hass.locale}
               min=${this._minValue == Infinity ? -999999999 : this._minValue}
               max=${this._maxValue == -Infinity ? 999999999 : this._maxValue}
-              .value=${value ? value : ""}
+              .value=${value == undefined ? "" : value}
               .valueLabel = "${config.main?.show_entity_name ? (config.entity?.settings && config.entity?.settings?.name ? config.entity?.settings?.name : config.entity?.entity) : undefined}"
               .unitOfMeasure = ${config.entity?.settings?.unit_of_measurement ?? ""}
               .showNeedle=${config.main?.show_needle}
