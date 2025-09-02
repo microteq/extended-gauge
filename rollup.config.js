@@ -7,8 +7,8 @@ import terser  from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 //import minifyHTML from 'rollup-plugin-minify-html-literals';
 
-const dev = process.env.ROLLUP_WATCH;
-//const dev = false;
+//const dev = process.env.ROLLUP_WATCH;
+const dev = false;
 
 const serveOptions = {
   contentBase: ["dist"],
