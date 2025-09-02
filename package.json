@@ -1,6 +1,6 @@
 {
   "name": "Extended Gauge Card",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Gauge card with multiple segments for Home Assistant",
   "keywords": [
     "home-assistant",
