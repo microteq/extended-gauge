@@ -25,11 +25,9 @@
 #Python
 __pycache__
 
-#Github
-.github
-
 #Debug files
-dist
+dist/*
+!dist/extended-gauge.js
 node_modules
 
 # Config Framework Code Symlink

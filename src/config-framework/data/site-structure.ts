@@ -5,90 +5,104 @@
 /*          page section with no data, you can give it any name and just not define a corresponding config data object.
 /* History: 27-MAR-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-import {Page} from "../code/config-framework";
-import 
-{ 
-  mainConfigSchema, 
-  segmentSettingsConfigSchema, 
-  titleConfigSchema, 
-  entitySettingsConfigSchema, 
-  entityConfigSchema 
+import { Page } from "../code/config-framework";
+import {
+  mainConfigSchema,
+  needleConfigSchema,
+  segmentSettingsConfigSchema,
+  titleConfigSchema,
+  entitySettingsConfigSchema,
+  entityConfigSchema,
 } from "./config-schema";
-
 
 /*****************************************************************************************************************************/
 /* Purpose: Event page
 /* History: 26-MAR-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-const segmentSettingsPage: Page = 
-{
+const segmentSettingsPage: Page = {
   title: "edit_segment",
   alternative_title: "add_segment",
-  sections: 
-  [
+  sections: [
     {
       name: "title",
       type: "form",
-      schema: titleConfigSchema
+      schema: titleConfigSchema,
     },
     {
       name: "settings",
       type: "form",
-      schema: segmentSettingsConfigSchema
+      schema: segmentSettingsConfigSchema,
     },
-  ]
-}
-
+  ],
+};
 
 /*****************************************************************************************************************************/
 /* Purpose: Main page
 /* History: 26-MAR-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-export const entitySettingsPage: Page = 
-{
+export const entitySettingsPage: Page = {
   title: "entity_settings",
-  sections:
-  [
+  sections: [
     {
       name: "settings",
-      type : "form",
+      type: "form",
       schema: entitySettingsConfigSchema,
     },
-  ]
-}
+  ],
+};
 
+/*****************************************************************************************************************************/
+/* Purpose: Needle settings page
+/* History: 12-JUL-2025 D.Geisenhoff   Created
+/*****************************************************************************************************************************/
+const needleSettingsPage: Page = {
+  title: "needle_settings",
+  sections: [
+    {
+      name: "needle",
+      type: "form",
+      schema: needleConfigSchema,
+      conditionalSchemaField: "needle_style",
+    },
+  ],
+};
 
 /*****************************************************************************************************************************/
 /* Purpose: Define the sections of the main page
 /* History: 26-MAR-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-export const mainPage: Page = 
-{
-  sections:
-  [
+export const mainPage: Page = {
+  sections: [
     {
       name: "title",
-      type : "form",
+      type: "form",
       schema: titleConfigSchema,
     },
     {
       name: "entity",
-      type : "entity",
+      type: "entity",
       schema: entityConfigSchema,
-      link: entitySettingsPage
+      link: entitySettingsPage,
     },
     {
       name: "main",
-      type : "form",
+      type: "form",
       schema: mainConfigSchema,
     },
-    { 
+    {
+      name: "main",
+      type: "menu",
+      title: "needle_settings",
+      icon: "mdi:arrow-up-circle-outline",
+      link: needleSettingsPage,
+    },
+    {
       name: "segment_list",
-      type : "element_list",
+      type: "element_list",
       title: "segment_list",
       alternative_title: "segment_list_empty",
       sortable: true,
       link: segmentSettingsPage,
     },
-  ]
-}
+  ],
+};

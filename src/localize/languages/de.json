@@ -1,7 +1,8 @@
 {
-  "editor": 
+  "editor":
   {
     "entity_settings": "Einstellungen der Entität bearbeiten",
+    "needle_settings": "Nadeleinstellungen bearbeiten",
     "name": "Name",
     "unit_of_measurement": "Masseinheit",
     "conversion_factor": "Umrechnungsfaktor",
@@ -12,10 +13,20 @@
     "max_value": "Maximaler angezeigter Wert",
     "color_value": "Farbe für die Anzeige des Wertes",
     "color_background": "Hintergrundfarbe (kein Wert)",
-    "show_needle": "Nadel anzeigen",
+    "display_mode": "Anzeigemodus",
+    "display_mode_gauge_and_needle": "Vollständige Anzeige mit Nadel",
+    "display_mode_dial_only": "Nur Zeiger",
+    "display_mode_dial_and_needle": "Zeiger mit Nadel",
     "show_entity_name": "Name der Entität anzeigen",
     "show_min_max_values": "Min. / Max. Werte anzeigen",
     "show_segment_labels": "Segmentgrenzwerte anzeigen",
+    "needle_style": "Nadelstil",
+    "needle_icon": "Nadel-Symbol",
+    "needle_icon_keep_vertical": "Symbol vertikal halten",
+    "needle_icon_size": "Symbol-Grössenmultiplikator",
+    "needle_icon_color": "Symbol-Farbe",
+    "needle_icon_background_color_enabled": "Symbol-Hintergrundfarbe anzeigen",
+    "needle_icon_background_color": "Symbol-Hintergrundfarbe",
     "add_segment": "Segment hinzufügen",
     "edit_segment": "Segment bearbeiten",
     "segment_list": "Segmente",
@@ -25,7 +36,7 @@
     "segment_color": "Farbe de Segments",
     "segment_value_replacement": "Wert überschreiben"
   },
-  "error": 
+  "error":
   {
       "range_lower_greater_than_upper":"Die untere Bereichsgrenze ist grösser als die obere.",
       "value_lower_greater_than_upper":"Der angezeigte Minimalwert ist grösser als der Maximalwert."

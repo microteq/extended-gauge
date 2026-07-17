@@ -26,8 +26,155 @@ The Extended Gauge Card is inspired by the Home Assistant Gauge Card but offers 
 - Individually configurable segments, each with a lower and upper bound, a color, and a replacement value.
 - Unlimited number of segments.
 - Shows values of segment bounds.
-- Shows with or without a needle.
+- Configurable display mode: full gauge with needle, dial only, or dial with needle shown simultaneously.
+- Configurable needle styles: default, classic (original Home Assistant style), or icon-based needle.
 <br />
+<br />
+
+## Visual examples
+
+> To regenerate the preview images after making changes, run:
+> ```bash
+> node utils/scripts/generate-previews.js
+> ```
+
+For a full collection of ready-to-copy YAML configurations (CPU temperature, battery level, AQI, UV index, wind speed, CO₂, and more), see **[docs/examples.md](docs/examples.md)**.
+
+### Default needle style
+
+![Default needle](assets/preview-needle-default.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: gauge_and_needle
+```
+
+---
+
+### Classic Home Assistant needle style
+
+![Original HA needle](assets/preview-needle-old.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: gauge_and_needle
+  needle:
+    needle_style: classic
+```
+
+---
+
+### Icon needle — rotating with gauge
+
+![Icon needle rotating](assets/preview-needle-icon-rotate.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: gauge_and_needle
+  needle:
+    needle_style: icon
+    needle_icon: mdi:chevron-down
+    needle_icon_keep_vertical: false
+    needle_icon_size: 2
+    needle_icon_color: [91, 200, 255]
+    needle_icon_background_color: [42, 92, 143]
+```
+
+---
+
+### Icon needle — always vertical, moves along arc
+
+![Icon needle vertical](assets/preview-needle-icon-vertical.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: gauge_and_needle
+  needle:
+    needle_style: icon
+    needle_icon: mdi:chevron-down
+    needle_icon_keep_vertical: true
+    needle_icon_size: 2
+    needle_icon_color: [91, 200, 255]
+    needle_icon_background_color: [42, 92, 143]
+```
+
+---
+
+### Segments with needle
+
+![Segments and needle](assets/preview-segments-needle.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: gauge_and_needle
+segment_list:
+  - settings:
+      segment_lower: 0
+      segment_upper: 33
+      segment_color: [76, 175, 80]
+  - settings:
+      segment_lower: 70
+      segment_upper: 85
+      segment_color: [255, 152, 0]
+```
+
+---
+
+### Segment threshold labels
+
+![Segment labels](assets/preview-segments-labels.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  show_segment_labels: true
+segment_list:
+  - settings:
+      segment_lower: 0
+      segment_upper: 33
+      segment_color: [76, 175, 80]
+  - settings:
+      segment_lower: 70
+      segment_upper: 85
+      segment_color: [255, 152, 0]
+```
+
+---
+
+### Custom value range
+
+![Custom range](assets/preview-custom-range.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  min_value: -20
+  max_value: 40
+  display_mode: gauge_and_needle
+entity:
+  settings:
+    unit_of_measurement: "°C"
+```
+
+---
+
+### No needle — dial mode only
+
+![No needle dial mode](assets/preview-no-needle.svg)
+
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: dial_only
+```
+
+---
+
 <br />
 
 ## Installation
@@ -63,11 +210,13 @@ After installing your Extended Gauge Card, edit your dashboard or create a new o
 | *Maximum&nbsp;displayed&nbsp;value* | The value at which the gauge display ends. |
 | *Color&nbsp;for&nbsp;value&nbsp;display* | The default background color when the needle is shown, or the color of the current value display if the needle is hidden. |
 | *Background&nbsp;color&nbsp;(no&nbsp;value)* | The default background color when the needle is shown, or the color of the current value display if the needle is hidden. |
-| *Show needle* | Toggle to show or hide the needle. |
+| *Display mode* | Selects how the gauge is rendered. Options: `gauge_and_needle` (full gauge with needle), `dial_only` (no needle), `dial_and_needle` (dial fill arc and needle shown at the same time). |
 | *Show entity name* | Toggle to show or hide the entity name below the value. |
 | *Show min&nbsp;/&nbsp;max values* | Toggle to show or hide the gauge’s minimum and maximum values. |
 | *Show&nbsp;segment&nbsp;thresholds* | Toggle to show or hide the segment threshold values. |
 <br />
+
+> **Note:** Older configs created before `display_mode` was introduced may still use the `show_needle` YAML option. It is deprecated but continues to work as a fallback when `display_mode` is not set. We recommend migrating to `display_mode`.
 
 ### Editing the entity
 To gain more control over how the entity value is displayed, click the edit button to the right of the selected entity Id.
@@ -80,6 +229,50 @@ To gain more control over how the entity value is displayed, click the edit butt
 | *Number of decimals* | The number of decimal places to be displayed. |
 | *Thousands separator* | The character to be used as the thousands separator. |
 | *Decimal separator* | The character to be used as the decimal separator. |
+<br />
+
+### Editing the needle settings
+When *Display mode* is set to `gauge_and_needle` or `dial_and_needle`, click **Edit needle settings** to configure the needle appearance.
+
+| Field name | Description |
+| ---------- | ----------- |
+| *Needle style* | The visual style of the needle. Options: `default` (current arrow style), `classic` (original Home Assistant gauge needle), `icon` (a custom MDI icon). |
+| *Needle icon* | Only used when *Needle style* is set to `icon`. Select any MDI icon to use as the needle indicator. |
+| *Keep icon vertical* | Only used when *Needle style* is set to `icon`. When enabled, the icon stays upright and does not rotate with the gauge direction; it only moves along the gauge arc. When disabled, the icon rotates to follow the gauge bearing. |
+| *Icon size multiplier* | Only used when *Needle style* is set to `icon`. Scales the icon. `1` is the default size; `2` doubles it, `0.5` halves it. |
+| *Icon color* | Only used when *Needle style* is set to `icon`. Sets the fill color of the icon. |
+| *Icon background color* | Only used when *Needle style* is set to `icon`. Draws a filled circle behind the icon to make it stand out against the gauge arc. |
+<br />
+
+**YAML example — classic needle style:**
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: gauge_and_needle
+  needle:
+    needle_style: classic
+```
+
+**YAML example — icon needle with size, color and background:**
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: gauge_and_needle
+  needle:
+    needle_style: icon
+    needle_icon: mdi:chevron-down
+    needle_icon_keep_vertical: true
+    needle_icon_size: 2
+    needle_icon_color: [91, 200, 255]
+    needle_icon_background_color: [42, 92, 143]
+```
+
+**YAML example — needle and dial shown simultaneously:**
+```yaml
+type: custom:extended-gauge-card
+main:
+  display_mode: dial_and_needle
+```
 <br />
 
 ### Adding segments

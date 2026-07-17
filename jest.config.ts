@@ -148,6 +148,15 @@ const config: Config = {
   // The test environment that will be used for testing
   testEnvironment: "node",
 
+  // Map @mdi/js (ESM) to its CommonJS build so Jest can require it without needing
+  // to transform the package itself.
+  moduleNameMapper: {
+    "^@mdi/js$": "<rootDir>/node_modules/@mdi/js/commonjs/mdi.js",
+  },
+
+  // Exclude manual mock stubs from being treated as test suites.
+  testPathIgnorePatterns: ["/node_modules/", "/__mocks__/"],
+
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
 

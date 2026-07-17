@@ -16,6 +16,7 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "rootDir": ".",
+    "types": ["jest"],
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]

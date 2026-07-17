@@ -63,12 +63,12 @@
 //     cancelable?: boolean;
 //     composed?: boolean;
 //   }
-// ) => 
+// ) =>
 // {
 //   options = options || {};
 //   // @ts-ignore
 //   detail = detail === null || detail === undefined ? {} : detail;
-//   const event = new Event(type, 
+//   const event = new Event(type,
 //   {
 //     bubbles: options.bubbles === undefined ? true : options.bubbles,
 //     cancelable: Boolean(options.cancelable),

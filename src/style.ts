@@ -15,15 +15,13 @@ export const styles = css`
     justify-content: center;
     flex-direction: column;
     box-sizing: border-box;
-}
+  }
 
-  .card-content-container 
-  {
+  .card-content-container {
     width: 100%;
   }
 
-  .card-header
-  {
+  .card-header {
     line-height: normal;
     padding: 0;
   }

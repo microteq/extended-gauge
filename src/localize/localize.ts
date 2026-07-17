@@ -14,60 +14,49 @@ import * as fr from "./languages/fr.json";
 import * as it from "./languages/it.json";
 import * as es from "./languages/es.json";
 
-
 /*****************************************************************************************************************************/
 /* Purpose: Supported languages
 /* History: 20-JUN-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-const languages: Record<string, unknown> = 
-{
+const languages: Record<string, unknown> = {
   en,
   de,
   fr,
   it,
-  es
+  es,
 };
 const defaultLang = "en";
-
 
 /*****************************************************************************************************************************/
 /* Purpose: translate text key into a localized string
 /* History: 20-JUN-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-function getTranslatedString(key: string, lang: string): string | undefined 
-{
-  try 
-  {
+function getTranslatedString(key: string, lang: string): string | undefined {
+  try {
     return key
       .split(".")
       .reduce(
         (o, i) => (o as Record<string, unknown>)[i],
         languages[lang]
       ) as string;
-  } 
-  catch (_) 
-  {
+  } catch (_) {
     return undefined;
   }
 }
-
 
 /*****************************************************************************************************************************/
 /* Purpose: Do custom localization of a text key. Take english as default. Return key, if no translation found.
 /* History: 20-JUN-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-export function setupCustomlocalize(key: string) 
-{
+export function setupCustomlocalize(key: string) {
   const lang = (localStorage.getItem("selectedLanguage") || "en")
     .replace(/['"]+/g, "")
     .replace("-", "_");
 
   let translated = getTranslatedString(key, lang);
-  if (!translated) 
-    translated = getTranslatedString(key, defaultLang);
+  if (!translated) translated = getTranslatedString(key, defaultLang);
   return translated ?? key;
 }
-
 
 /*****************************************************************************************************************************/
 /* Purpose: SetupCustomLocalize is default function of this file.

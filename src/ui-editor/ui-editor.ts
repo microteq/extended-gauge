@@ -1,157 +1,172 @@
 import { customElement } from "lit/decorators.js";
-import { ConfigFramework, PageSection} from "../config-framework/code/config-framework";
+import {
+  ConfigFramework,
+  PageSection,
+} from "../config-framework/code/config-framework";
 import { hexToRgb } from "../utils/convertColor";
 import localize from "../localize/localize";
 import { mainPage } from "../config-framework/data/site-structure";
-
 
 /*****************************************************************************************************************************/
 /* Purpose: Assign HTML tag to this class
 /* History: 24-FEB-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
-declare global 
-{
-  interface HTMLElementTagNameMap 
-  {
+declare global {
+  interface HTMLElementTagNameMap {
     "extended-gauge-ui-editor": ExtendedGaugeUiEditor;
   }
 }
 
-
 /*****************************************************************************************************************************/
 /* Purpose: Extended gauge editor class
-/* History: 22-FEB-2025 D. Geisenhoff   Created
+/* History: 22-FEB-2025 D.Geisenhoff   Created
 /*****************************************************************************************************************************/
 @customElement("extended-gauge-ui-editor")
-export class ExtendedGaugeUiEditor extends ConfigFramework
-{
+export class ExtendedGaugeUiEditor extends ConfigFramework {
   /*****************************************************************************************************************************/
   /* Purpose: Set site structure in constructor
   /* History: 24-APR-2025 D.Geisenhoff   Created
   /*****************************************************************************************************************************/
-  constructor()
-  {
+  constructor() {
     super(mainPage);
   }
-
 
   /*****************************************************************************************************************************/
   /* Purpose: Autofill other fields of current form or set defaults
   /* History: 01-APR-2025 D.Geisenhoff   Created
   /*****************************************************************************************************************************/
-  protected override valueChanged(pageName: string, pageConfigData: any, sectionName: string, sectionConfigData: any): any
-  {
-    switch (pageName)
-    {
+  protected override valueChanged(
+    pageName: string,
+    pageConfigData: any,
+    sectionName: string,
+    sectionConfigData: any
+  ): any {
+    switch (pageName) {
       // If entity has a unit of measurement, use it
       case "":
-        switch (sectionName)
-        {
-          case "entity":
+        switch (sectionName) {
+          case "entity": {
             const entity = sectionConfigData?.entity;
-            if (entity)
-            {
+            if (entity) {
               // add unit of measurement, if entity exists
               const stateObj = this.hass.states[entity];
-              if (stateObj)
-              {
+              if (stateObj) {
                 // add unit of measurement, if entity has one
-                const unitOfMeasurement = stateObj.attributes.unit_of_measurement;
-                if (!sectionConfigData.settings) 
+                const unitOfMeasurement =
+                  stateObj.attributes.unit_of_measurement;
+                if (!sectionConfigData.settings)
                   sectionConfigData.settings = {};
-                else 
-                  sectionConfigData.settings = {...sectionConfigData.settings}
-                if (unitOfMeasurement)
-                {
-                  sectionConfigData.settings.unit_of_measurement = unitOfMeasurement;
-                }
                 else
-                  delete sectionConfigData.settings.unit_of_measurement;
+                  sectionConfigData.settings = {
+                    ...sectionConfigData.settings,
+                  };
+                if (unitOfMeasurement) {
+                  sectionConfigData.settings.unit_of_measurement =
+                    unitOfMeasurement;
+                } else delete sectionConfigData.settings.unit_of_measurement;
               }
-            }
-            else
-            {
+            } else {
               // remove unit of measurement, if entity is removed
-              if (sectionConfigData?.settings?.unit_of_measurement != undefined)
-              {
-                sectionConfigData.settings = {...sectionConfigData.settings};
+              if (
+                sectionConfigData?.settings?.unit_of_measurement != undefined
+              ) {
+                sectionConfigData.settings = { ...sectionConfigData.settings };
                 delete sectionConfigData.settings.unit_of_measurement;
               }
             }
             pageConfigData[sectionName] = sectionConfigData;
             break;
+          }
+          case "main": {
+            if (
+              sectionConfigData.display_mode !== undefined &&
+              sectionConfigData.show_needle !== undefined
+            ) {
+              sectionConfigData = { ...sectionConfigData };
+              delete sectionConfigData.show_needle;
+              pageConfigData[sectionName] = sectionConfigData;
+            }
+            break;
+          }
+        }
+        break;
+      // Needle settings page
+      case "main":
+        switch (sectionName) {
+          case "needle": {
+            // When background color toggle is turned off, remove the color from config
+            if (!sectionConfigData?.needle_icon_background_color_enabled) {
+              sectionConfigData = { ...sectionConfigData };
+              delete sectionConfigData.needle_icon_background_color;
+            }
+            pageConfigData[sectionName] = sectionConfigData;
+            break;
+          }
         }
         break;
     }
-    return pageConfigData
+    return pageConfigData;
   }
-
 
   /*****************************************************************************************************************************/
   /* Purpose: Set defaults for fields of page, when a list element is added to the list
   /* History: 17-APR-2025 D.Geisenhoff   Created
   /*****************************************************************************************************************************/
-  protected override listElementAdded(pageName: string, configData: any): any
-  {
+  protected override listElementAdded(pageName: string, configData: any): any {
     let newConfigData = configData;
-    switch (pageName)
-    {
-      // Set default color for segment 
+    switch (pageName) {
+      // Set default color for segment
       case "segment_list":
-        if (configData.settings == undefined || configData.segment_color == undefined)
-        {
+        if (
+          configData.settings == undefined ||
+          configData.segment_color == undefined
+        ) {
           const style = getComputedStyle(this);
-          const accentColor = style.getPropertyValue('--accent-color').trim();
-          newConfigData = {...configData};
-          if (!newConfigData.settings) 
-            newConfigData.settings = {};
-          else 
-            newConfigData.settings = {...newConfigData.settings}
+          const accentColor = style.getPropertyValue("--accent-color").trim();
+          newConfigData = { ...configData };
+          if (!newConfigData.settings) newConfigData.settings = {};
+          else newConfigData.settings = { ...newConfigData.settings };
           newConfigData.settings.segment_color = hexToRgb(accentColor);
         }
         break;
     }
-    return newConfigData
+    return newConfigData;
   }
-
 
   /*****************************************************************************************************************************/
   /* Purpose: Validate the form section
   /* History: 07-APR-2025 D.Geisenhoff   Created
   /*****************************************************************************************************************************/
-  protected override validateForm (pageName: string, section: PageSection, newConfigData: any): boolean 
-  {
+  protected override validateForm(
+    pageName: string,
+    section: PageSection,
+    newConfigData: any
+  ): boolean {
     section._errors = {};
-    switch (pageName)
-    {
+    switch (pageName) {
       case "": // main page
-        switch (section.name)
-        {
+        switch (section.name) {
           case "main":
-            if (newConfigData?.min_value > newConfigData?.max_value)
-            {
+            if (newConfigData?.min_value > newConfigData?.max_value) {
               section._errors = { base: "value_lower_greater_than_upper" };
               return false;
             }
             break;
         }
         break;
-      case "segment_list": 
-        switch (section.name)
-        {
+      case "segment_list":
+        switch (section.name) {
           case "settings":
-            if (newConfigData?.segment_lower > newConfigData?.segment_upper)
-            {
+            if (newConfigData?.segment_lower > newConfigData?.segment_upper) {
               section._errors = { base: "range_lower_greater_than_upper" };
               return false;
             }
             break;
         }
-      break;
+        break;
     }
     return true;
   }
-
 
   /*****************************************************************************************************************************/
   /* Purpose: Generate localized texts for labels, etc.
@@ -160,7 +175,6 @@ export class ExtendedGaugeUiEditor extends ConfigFramework
   protected override localizeText = (text: string) =>
     localize(`editor.${text}`);
 
-
   /*****************************************************************************************************************************/
   /* Purpose: Generate localized texts for errors
   /* History: 24-FEB-2025 D.Geisenhoff   Created
@@ -168,5 +182,3 @@ export class ExtendedGaugeUiEditor extends ConfigFramework
   protected override localizeError = (schema: any) =>
     localize(`error.${schema}`);
 }
-
-

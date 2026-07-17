@@ -1,7 +1,8 @@
 {
-    "editor": 
+    "editor":
     {
       "entity_settings": "Modifier les paramètres de l'entité",
+      "needle_settings": "Modifier les paramètres de l'aiguille",
       "name": "Nom",
       "unit_of_measurement": "Unité de mesure",
       "conversion_factor": "Facteur de conversion",
@@ -12,10 +13,20 @@
       "max_value": "Valeur maximale affichée",
       "color_value": "Couleur de la valeur",
       "color_background": "Couleur de fond (pas de valeur)",
-      "show_needle": "Afficher l'aiguille",
+      "display_mode": "Mode d'affichage",
+      "display_mode_gauge_and_needle": "Jauge complète avec aiguille",
+      "display_mode_dial_only": "Cadran seulement",
+      "display_mode_dial_and_needle": "Cadran avec aiguille",
       "show_entity_name": "Afficher le nom de l'entité",
       "show_min_max_values": "Afficher les valeurs min / max",
       "show_segment_labels": "Afficher les limites des segments",
+      "needle_style": "Style de l'aiguille",
+      "needle_icon": "Icône de l'aiguille",
+      "needle_icon_keep_vertical": "Garder l'icône verticale",
+      "needle_icon_size": "Multiplicateur de taille de l'icône",
+      "needle_icon_color": "Couleur de l'icône",
+      "needle_icon_background_color_enabled": "Afficher la couleur de fond de l'icône",
+      "needle_icon_background_color": "Couleur de fond de l'icône",
       "add_segment": "Ajouter un segment",
       "edit_segment": "Modifier le segment",
       "segment_list": "Segments",
@@ -25,10 +36,9 @@
       "segment_color": "Couleur du segment",
       "segment_value_replacement": "Remplacer la valeur"
     },
-    "error": 
+    "error":
     {
       "range_lower_greater_than_upper": "La limite inférieure est supérieure à la limite supérieure.",
       "value_lower_greater_than_upper": "La valeur minimale affichée est supérieure à la valeur maximale."
     }
   }
-  

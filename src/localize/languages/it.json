@@ -1,7 +1,8 @@
 {
-    "editor": 
+    "editor":
     {
       "entity_settings": "Modifica impostazioni entità",
+      "needle_settings": "Modifica impostazioni indicatore",
       "name": "Nome",
       "unit_of_measurement": "Unità di misura",
       "conversion_factor": "Fattore di conversione",
@@ -12,10 +13,20 @@
       "max_value": "Valore massimo visualizzato",
       "color_value": "Colore del valore",
       "color_background": "Colore di sfondo (nessun valore)",
-      "show_needle": "Mostra l'indicatore",
+      "display_mode": "Modalità di visualizzazione",
+      "display_mode_gauge_and_needle": "Gauge completo con indicatore",
+      "display_mode_dial_only": "Solo quadrante",
+      "display_mode_dial_and_needle": "Quadrante con indicatore",
       "show_entity_name": "Mostra il nome dell'entità",
       "show_min_max_values": "Mostra valori min / max",
       "show_segment_labels": "Mostra i limiti dei segmenti",
+      "needle_style": "Stile dell'indicatore",
+      "needle_icon": "Icona dell'indicatore",
+      "needle_icon_keep_vertical": "Mantieni icona verticale",
+      "needle_icon_size": "Moltiplicatore dimensione icona",
+      "needle_icon_color": "Colore dell'icona",
+      "needle_icon_background_color_enabled": "Mostra colore di sfondo dell'icona",
+      "needle_icon_background_color": "Colore di sfondo dell'icona",
       "add_segment": "Aggiungi segmento",
       "edit_segment": "Modifica segmento",
       "segment_list": "Segmenti",
@@ -25,10 +36,9 @@
       "segment_color": "Colore del segmento",
       "segment_value_replacement": "Sostituisci valore"
     },
-    "error": 
+    "error":
     {
       "range_lower_greater_than_upper": "Il limite inferiore è maggiore del limite superiore.",
       "value_lower_greater_than_upper": "Il valore minimo visualizzato è maggiore del valore massimo."
     }
   }
-  

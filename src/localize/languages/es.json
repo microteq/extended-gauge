@@ -1,7 +1,8 @@
 {
-    "editor": 
+    "editor":
     {
       "entity_settings": "Editar configuración de la entidad",
+      "needle_settings": "Editar configuración de la aguja",
       "name": "Nombre",
       "unit_of_measurement": "Unidad de medida",
       "conversion_factor": "Factor de conversión",
@@ -12,10 +13,20 @@
       "max_value": "Valor máximo mostrado",
       "color_value": "Color para mostrar el valor",
       "color_background": "Color de fondo (sin valor)",
-      "show_needle": "Mostrar aguja",
+      "display_mode": "Modo de visualización",
+      "display_mode_gauge_and_needle": "Gauge completo con aguja",
+      "display_mode_dial_only": "Solo esfera",
+      "display_mode_dial_and_needle": "Esfera con aguja",
       "show_entity_name": "Mostrar nombre de la entidad",
       "show_min_max_values": "Mostrar valores mín. / máx.",
       "show_segment_labels": "Mostrar límites de segmentos",
+      "needle_style": "Estilo de la aguja",
+      "needle_icon": "Ícono de la aguja",
+      "needle_icon_keep_vertical": "Mantener ícono vertical",
+      "needle_icon_size": "Multiplicador de tamaño del ícono",
+      "needle_icon_color": "Color del ícono",
+      "needle_icon_background_color_enabled": "Mostrar color de fondo del ícono",
+      "needle_icon_background_color": "Color de fondo del ícono",
       "add_segment": "Agregar segmento",
       "edit_segment": "Editar segmento",
       "segment_list": "Segmentos",
@@ -25,10 +36,9 @@
       "segment_color": "Color del segmento",
       "segment_value_replacement": "Sobrescribir valor"
     },
-    "error": 
+    "error":
     {
       "range_lower_greater_than_upper": "El límite inferior es mayor que el límite superior.",
       "value_lower_greater_than_upper": "El valor mínimo mostrado es mayor que el valor máximo."
     }
   }
-  
