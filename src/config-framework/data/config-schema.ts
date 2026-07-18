@@ -173,11 +173,16 @@ export const needleConfigSchema = (needleConfig: any) => {
           name: "needle_style",
           selector: {
             select: {
-              options: 
-              [
-                { value: "default", label: localize("editor.needle_style_default") }, 
-                { value: "classic", label: localize("editor.needle_style_classic") }, 
-                { value: "icon", label: localize("editor.needle_style_icon") }
+              options: [
+                {
+                  value: "default",
+                  label: localize("editor.needle_style_default"),
+                },
+                {
+                  value: "classic",
+                  label: localize("editor.needle_style_classic"),
+                },
+                { value: "icon", label: localize("editor.needle_style_icon") },
               ],
               mode: "dropdown",
             },
@@ -256,9 +261,18 @@ export const mainConfigSchema = [
         selector: {
           select: {
             options: [
-              { value: "gauge_and_needle", label: localize("editor.display_mode_gauge_and_needle"), },
-              { value: "dial_only", label: localize( "editor.display_mode_dial_only"), },
-              { value: "dial_and_needle", label: localize( "editor.display_mode_dial_and_needle"), },
+              {
+                value: "gauge_and_needle",
+                label: localize("editor.display_mode_gauge_and_needle"),
+              },
+              {
+                value: "dial_only",
+                label: localize("editor.display_mode_dial_only"),
+              },
+              {
+                value: "dial_and_needle",
+                label: localize("editor.display_mode_dial_and_needle"),
+              },
             ],
             mode: "dropdown",
           },
