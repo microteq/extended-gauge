@@ -29,7 +29,6 @@ __pycache__
 dist/*
 !dist/extended-gauge.js
 node_modules
-src/__tests__
 
 # Config Framework Code Symlink
 src/config-framework/code
