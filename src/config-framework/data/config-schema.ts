@@ -290,6 +290,10 @@ export const mainConfigSchema = [
         name: "show_segment_labels",
         selector: { boolean: {} },
       },
+      {
+        name: "use_gradient",
+        selector: { boolean: {} },
+      },
     ],
   },
 ];

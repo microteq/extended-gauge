@@ -20,6 +20,7 @@
     "show_entity_name": "Name der Entität anzeigen",
     "show_min_max_values": "Min. / Max. Werte anzeigen",
     "show_segment_labels": "Segmentgrenzwerte anzeigen",
+    "use_gradient": "Farbverlauf verwenden",
     "needle_style": "Nadelstil",
     "needle_style_default": "Standard",
     "needle_style_classic": "Klassisch",

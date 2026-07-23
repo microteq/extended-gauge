@@ -88,6 +88,7 @@ interface MainConfigData {
   show_entity_name?: boolean;
   show_min_max_values?: boolean;
   show_segment_labels?: boolean;
+  use_gradient?: boolean;
 }
 
 /*****************************************************************************************************************************/

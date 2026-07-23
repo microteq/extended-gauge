@@ -256,71 +256,72 @@ export class ExtendedGaugeCard extends LitElement {
   /*******************************************************************************************************************************/
   private _getDemoData(): ExtendedGaugeConfigData {
     const config = { ...this._config };
+
+    if (this._config.segment_list && this._config.segment_list.length > 0) {
+      config.segment_list = this._config.segment_list;
+    }
+
     if (this._config.main?.min_value != undefined)
       this._minValue = this._config.main?.min_value;
     else this._minValue = 0;
-    if (this._config.main?.max_value != undefined)
+
+    if (this._config.main?.max_value != undefined) {
       this._maxValue = this._config.main?.max_value;
-    else
-      this._maxValue =
-        this._config.entity?.settings?.conversion_factor == undefined
-          ? 100
-          : 100 / this._config.entity?.settings?.conversion_factor;
+    } else {
+      let maxSegmentUpper = -Infinity;
+      if (config.segment_list && config.segment_list.length > 0) {
+        for (const segment of config.segment_list) {
+          if (segment.settings?.segment_upper != undefined) {
+            maxSegmentUpper = Math.max(
+              maxSegmentUpper,
+              segment.settings.segment_upper
+            );
+          }
+        }
+      }
+      if (maxSegmentUpper !== -Infinity && maxSegmentUpper > 100) {
+        this._maxValue = maxSegmentUpper;
+      } else {
+        this._maxValue =
+          this._config.entity?.settings?.conversion_factor == undefined
+            ? 100
+            : 100 / this._config.entity?.settings?.conversion_factor;
+      }
+    }
+
     if (this._maxValue <= this._minValue)
       this._maxValue =
         this._minValue +
         (this._config.entity?.settings?.conversion_factor == undefined
           ? 100
           : 100 / this._config.entity?.settings?.conversion_factor);
-    const rootStyles = getComputedStyle(document.documentElement);
-    const segment_list: SegmentPageConfigData[] = [];
-    const settings1: SegmentSettingsConfigData = {
-      segment_lower:
-        this._config?.segment_list?.[0]?.settings?.segment_lower ||
-        this._config?.segment_list?.[0]?.settings?.segment_upper
-          ? this._config?.segment_list?.[0]?.settings?.segment_lower
-          : this._minValue,
-      segment_upper:
-        this._config?.segment_list?.[0]?.settings?.segment_lower ||
-        this._config?.segment_list?.[0]?.settings?.segment_upper
-          ? this._config?.segment_list?.[0]?.settings?.segment_upper
-          : this._minValue + (this._maxValue - this._minValue) / 3,
-      segment_color: this._config?.segment_list?.[0]?.settings?.segment_color
-        ? this._config.segment_list[0].settings?.segment_color
-        : hexToRgb(rootStyles.getPropertyValue("--primary-color")),
-      segment_value_replacement: this._config?.segment_list?.[0]?.settings
-        ?.segment_value_replacement
-        ? this._config?.segment_list?.[0]?.settings?.segment_value_replacement
-        : undefined,
-    };
-    segment_list.push({
-      id: 0,
-      settings: settings1,
-    });
-    const settings2: SegmentSettingsConfigData = {
-      segment_lower:
-        this._config?.segment_list?.[1]?.settings?.segment_lower ||
-        this._config?.segment_list?.[1]?.settings?.segment_upper
-          ? this._config?.segment_list?.[1]?.settings?.segment_lower
-          : this._minValue + (this._maxValue - this._minValue) * 0.7,
-      segment_upper:
-        this._config?.segment_list?.[1]?.settings?.segment_lower ||
-        this._config?.segment_list?.[1]?.settings?.segment_upper
-          ? this._config?.segment_list?.[1]?.settings?.segment_upper
-          : this._minValue + (this._maxValue - this._minValue) * 0.85,
-      segment_color: this._config?.segment_list?.[1]?.settings?.segment_color
-        ? this._config.segment_list[1].settings?.segment_color
-        : hexToRgb(rootStyles.getPropertyValue("--accent-color")),
-      segment_value_replacement: this._config?.segment_list?.[1]?.settings
-        ?.segment_value_replacement
-        ? this._config?.segment_list?.[1]?.settings?.segment_value_replacement
-        : undefined,
-    };
-    segment_list.push({
-      id: 1,
-      settings: settings2,
-    });
-    config.segment_list = segment_list;
+
+    if (!this._config.segment_list || this._config.segment_list.length === 0) {
+      const rootStyles = getComputedStyle(document.documentElement);
+      const segment_list: SegmentPageConfigData[] = [];
+      const settings1: SegmentSettingsConfigData = {
+        segment_lower: this._minValue,
+        segment_upper: this._minValue + (this._maxValue - this._minValue) / 3,
+        segment_color: hexToRgb(rootStyles.getPropertyValue("--primary-color")),
+        segment_value_replacement: undefined,
+      };
+      segment_list.push({
+        id: 0,
+        settings: settings1,
+      });
+      const settings2: SegmentSettingsConfigData = {
+        segment_lower: this._minValue + (this._maxValue - this._minValue) * 0.7,
+        segment_upper:
+          this._minValue + (this._maxValue - this._minValue) * 0.85,
+        segment_color: hexToRgb(rootStyles.getPropertyValue("--accent-color")),
+        segment_value_replacement: undefined,
+      };
+      segment_list.push({
+        id: 1,
+        settings: settings2,
+      });
+      config.segment_list = segment_list;
+    }
     return config;
   }
 
@@ -399,6 +400,7 @@ export class ExtendedGaugeCard extends LitElement {
             .gaugeBackgroundColor=${ifDefined(
               toColorOrUndefined(config.main?.color_background)
             )}
+            .useGradient=${config.main?.use_gradient}
             .segments=${this._convertSegments(config)}
             .showSegmentLabels=${config.main?.show_segment_labels}
             .showMinMax=${config.main?.show_min_max_values}

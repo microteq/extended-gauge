@@ -143,6 +143,58 @@ segment_list:
 
 ---
 
+## Air Quality Index (AQI) with Color Gradient
+
+Follows the same AQI colour bands as above, but with `use_gradient: true` to create a smooth transition between the segment colours.
+
+![AQI Gradient preview](../assets/examples/aqi-gradient.svg)
+
+```yaml
+type: custom:extended-gauge-card
+title:
+  title: Air Quality Index (Smooth)
+entity:
+  entity: sensor.air_quality_index
+  settings:
+    decimals: 0
+main:
+  min_value: 0
+  max_value: 300
+  display_mode: gauge_and_needle
+  show_segment_labels: true
+  use_gradient: true
+  needle:
+    needle_style: default
+segment_list:
+  - title: good
+    settings:
+      segment_lower: 0
+      segment_upper: 50
+      segment_color: [0, 228, 0]
+  - title: moderate
+    settings:
+      segment_lower: 50
+      segment_upper: 100
+      segment_color: [255, 255, 0]
+  - title: unhealthy_sensitive
+    settings:
+      segment_lower: 100
+      segment_upper: 150
+      segment_color: [255, 126, 0]
+  - title: unhealthy
+    settings:
+      segment_lower: 150
+      segment_upper: 200
+      segment_color: [255, 0, 0]
+  - title: very_unhealthy
+    settings:
+      segment_lower: 200
+      segment_upper: 300
+      segment_color: [143, 63, 151]
+```
+
+---
+
 ## UV Index
 
 Shows the WHO UV index scale (0–11+) with standard risk-level colours.
