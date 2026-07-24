@@ -20,6 +20,7 @@
     "show_entity_name": "Show entity name",
     "show_min_max_values": "Show min / max values",
     "show_segment_labels": "Show segment thresholds",
+    "use_gradient": "Use color gradient",
     "needle_style": "Needle style",
     "needle_style_default": "Default",
     "needle_style_classic": "Classic",

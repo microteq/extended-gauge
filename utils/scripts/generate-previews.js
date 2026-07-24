@@ -368,6 +368,72 @@ function exampleAqi() {
   return svgWrap([BG_ARC, ...segs, defaultNeedle(angle), gaugeLabelsCustom('120', '0', '300')].join('\n    '), labels);
 }
 
+// 3.b AQI Gradient
+function exampleAqiGradient() {
+  const mn = 0, mx = 300, val = 120;
+  const angle = valueToAngle(val, mn, mx);
+  
+  const colorStops = [
+    { v: 0, r: 0, g: 228, b: 0 },
+    { v: 50, r: 255, g: 255, b: 0 },
+    { v: 100, r: 255, g: 126, b: 0 },
+    { v: 150, r: 255, g: 0, b: 0 },
+    { v: 200, r: 143, g: 63, b: 151 },
+    { v: 300, r: 143, g: 63, b: 151 }
+  ];
+  
+  let paths = '';
+  for (let i = 0; i < 180; i++) {
+    const angle1 = i;
+    const angle2 = i + 1.5;
+    const v = mn + (i / 180) * (mx - mn);
+    
+    let color = colorStops[0];
+    if (v >= colorStops[colorStops.length - 1].v) {
+      color = colorStops[colorStops.length - 1];
+    } else {
+      for (let j = 0; j < colorStops.length - 1; j++) {
+        if (v >= colorStops[j].v && v <= colorStops[j+1].v) {
+          const t = (v - colorStops[j].v) / (colorStops[j+1].v - colorStops[j].v);
+          color = {
+            r: Math.round(colorStops[j].r + t * (colorStops[j+1].r - colorStops[j].r)),
+            g: Math.round(colorStops[j].g + t * (colorStops[j+1].g - colorStops[j].g)),
+            b: Math.round(colorStops[j].b + t * (colorStops[j+1].b - colorStops[j].b))
+          };
+          break;
+        }
+      }
+    }
+    
+    const x1 = r2(-40 * Math.cos(angle1 * Math.PI / 180));
+    const y1 = r2(-40 * Math.sin(angle1 * Math.PI / 180));
+    const x2 = r2(-40 * Math.cos(angle2 * Math.PI / 180));
+    const y2 = r2(-40 * Math.sin(angle2 * Math.PI / 180));
+    
+    paths += '<path d="M ' + x1 + ' ' + y1 + ' A 40 40 0 0 1 ' + x2 + ' ' + y2 + '" fill="none" stroke="rgb(' + color.r + ',' + color.g + ',' + color.b + ')" stroke-width="16" stroke-linecap="butt" />';
+  }
+
+  const defs = '<defs><g id="aqi-slices">' + paths + '</g><mask id="aqi-mask" x="-50%" y="-50%" width="200%" height="200%">' + 
+    segmentArcPathV(0, 50, mn, mx, "white") +
+    segmentArcPathV(50, 100, mn, mx, "white") +
+    segmentArcPathV(100, 150, mn, mx, "white") +
+    segmentArcPathV(150, 200, mn, mx, "white") +
+    segmentArcPathV(200, 300, mn, mx, "white") +
+    '</mask></defs>';
+
+  const gradientArc = '<use href="#aqi-slices" mask="url(#aqi-mask)" />';
+
+  const labels = thresholdLabels([
+    { val: 50,  color: '#ffff00', label: '50'  },
+    { val: 100, color: '#ff7e00', label: '100' },
+    { val: 150, color: '#ff0000', label: '150' },
+    { val: 200, color: '#8f3f97', label: '200' },
+  ], mn, mx);
+  
+  return svgWrap([defs, BG_ARC, gradientArc, defaultNeedle(angle), gaugeLabelsCustom('120', '0', '300')].join('\n    '), labels);
+}
+
+
 // 4. UV Index — value 7, min=0 max=11, icon needle (sun), 4 segments
 function exampleUvIndex() {
   const mn = 0, mx = 11, val = 7;
@@ -485,6 +551,7 @@ const EXAMPLE_FILES = {
   'cpu-temp.svg':   exampleCpuTemp(),
   'battery.svg':    exampleBattery(),
   'aqi.svg':        exampleAqi(),
+  'aqi-gradient.svg': exampleAqiGradient(),
   'uv-index.svg':   exampleUvIndex(),
   'humidity.svg':   exampleHumidity(),
   'power.svg':      examplePower(),

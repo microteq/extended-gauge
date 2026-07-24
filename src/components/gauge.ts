@@ -16,6 +16,7 @@ import {
 import { getIconSvgPath } from "../utils/get-icon-svg-path";
 import { renderNeedle } from "../utils/needle-renderer";
 import { normalizeSegments } from "../utils/normalize-segments";
+import { hexToRgb } from "../utils/convertColor";
 
 // Re-export for consumers that import directly from this file.
 export { normalizeValue, getValueInPercentage, getAngle };
@@ -141,6 +142,7 @@ export class ExtendedGauge extends LitElement {
   @property({ type: Boolean }) public showNeedle = false;
   @property({ type: Boolean }) public showDial = false;
   @property({ type: Boolean }) public showSegments = false;
+  @property({ type: Boolean }) public useGradient = false;
   @property({ type: String }) public needleStyle: NeedleStyle = "default";
   @property({ type: String }) public needleIcon?: string;
   @property({ type: Boolean }) public needleIconKeepVertical = false;
@@ -309,6 +311,57 @@ export class ExtendedGauge extends LitElement {
   /* History: 04-APR-2025 D.Geisenhoff  Created
   /*                                    Animate needle only after first render and if animation property is true
   /*******************************************************************************************************************************/
+
+  private _renderGradientSlices() {
+    if (!this.segments || this.segments.length === 0) return svg``;
+
+    const sorted = this.segments.slice().sort((a, b) => a.lower! - b.lower!);
+
+    const colorStops = sorted.map((seg) => {
+      const angle = this._getLowerAngle(seg.lower!, this.min, this.max);
+      const rgb = hexToRgb(seg.color) || [128, 128, 128];
+      return { angle, r: rgb[0], g: rgb[1], b: rgb[2] };
+    });
+
+    if (colorStops.length === 0) return svg``;
+
+    const interpolate = (ang: number) => {
+      if (ang <= colorStops[0].angle) return colorStops[0];
+      if (ang >= colorStops[colorStops.length - 1].angle)
+        return colorStops[colorStops.length - 1];
+
+      for (let i = 0; i < colorStops.length - 1; i++) {
+        const s1 = colorStops[i];
+        const s2 = colorStops[i + 1];
+        if (ang >= s1.angle && ang <= s2.angle) {
+          const t = (ang - s1.angle) / (s2.angle - s1.angle);
+          return {
+            r: Math.round(s1.r + t * (s2.r - s1.r)),
+            g: Math.round(s1.g + t * (s2.g - s1.g)),
+            b: Math.round(s1.b + t * (s2.b - s1.b)),
+          };
+        }
+      }
+      return colorStops[0];
+    };
+
+    const paths: any[] = [];
+    for (let i = 0; i < 180; i++) {
+      const angle1 = i;
+      const angle2 = i + 1.5;
+      const color = interpolate(i);
+      const x1 = 0 - 40 * Math.cos((angle1 * Math.PI) / 180);
+      const y1 = 0 - 40 * Math.sin((angle1 * Math.PI) / 180);
+      const x2 = 0 - 40 * Math.cos((angle2 * Math.PI) / 180);
+      const y2 = 0 - 40 * Math.sin((angle2 * Math.PI) / 180);
+
+      paths.push(
+        svg`<path d="M ${x1} ${y1} A 40 40 0 0 1 ${x2} ${y2}" fill="none" stroke="rgb(${color.r},${color.g},${color.b})" stroke-width="16" stroke-linecap="butt" />`
+      );
+    }
+    return paths;
+  }
+
   protected render() {
     this._normalizeSegments();
     const labelsFormatOptions = { ...this.formatOptions };
@@ -328,9 +381,68 @@ export class ExtendedGauge extends LitElement {
     const pathLength = 125.664; // Math.PI * 40
     const dashOffset = pathLength - (pathLength * this._valueAngle) / 180;
 
+    const hasGradient =
+      this.useGradient && this.segments && this.segments.length > 0;
+    const sortedSegmentsForGradient = hasGradient
+      ? this.segments!.slice().sort((a, b) => a.lower! - b.lower!)
+      : [];
+
     return html`
       <div class="gauge-container">
       <svg viewBox="-50 -50 130 55" class="gauge" style="overflow:visible;">
+      ${
+        hasGradient
+          ? svg`
+            <defs>
+              <g id="gradient-slices">
+                ${this._renderGradientSlices()}
+              </g>
+              <mask id="dial-mask" x="-50%" y="-50%" width="200%" height="200%">
+                <path
+                  class="dial ${
+                    this._updated && this.animation ? `animation` : ``
+                  }"
+                  stroke="white"
+                  stroke-dasharray="${pathLength}"
+                  stroke-dashoffset="${dashOffset}"
+                  d="M -40 0 A 40 40 0 0 1 40 0">
+                </path>
+              </mask>
+              <mask id="segments-mask" x="-50%" y="-50%" width="200%" height="200%">
+                ${
+                  this.segments && this.showSegments
+                    ? this.segments.map((segment) => {
+                        const angle_lower = this._getLowerAngle(
+                          segment.lower!,
+                          this.min,
+                          this.max
+                        );
+                        const angle_upper = this._getUpperAngle(
+                          segment.upper!,
+                          this.min,
+                          this.max
+                        );
+                        return svg`
+                            <path
+                              class="segment"
+                              stroke="white"
+                              d="M ${
+                                0 - 40 * Math.cos((angle_lower * Math.PI) / 180)
+                              } ${
+                          0 - 40 * Math.sin((angle_lower * Math.PI) / 180)
+                        } A 40 40 0 0 1 ${
+                          0 - 40 * Math.cos((angle_upper * Math.PI) / 180)
+                        } ${0 - 40 * Math.sin((angle_upper * Math.PI) / 180)}"
+                            ></path>
+                          `;
+                      })
+                    : ``
+                }
+              </mask>
+            </defs>
+          `
+          : ``
+      }
       <g transform="translate(15 5)">
         <path
           style =${styleMap({
@@ -345,50 +457,54 @@ export class ExtendedGauge extends LitElement {
         </path>
         ${
           this.segments && this.showSegments
-            ? this.segments
-                .slice()
-                .sort((a, b) => a.lower! - b.lower!)
-                .map((segment) => {
-                  const angle_lower = this._getLowerAngle(
-                    segment.lower!,
-                    this.min,
-                    this.max
-                  );
-                  const angle_upper = this._getUpperAngle(
-                    segment.upper!,
-                    this.min,
-                    this.max
-                  );
-                  return svg`
-                  <path
-                      stroke="${segment.color}"
-                      class="segment"
-                      d="M
-                        ${0 - 40 * Math.cos((angle_lower * Math.PI) / 180)}
-                        ${0 - 40 * Math.sin((angle_lower * Math.PI) / 180)}
-                       A 40 40 0 0 1
-                        ${0 - 40 * Math.cos((angle_upper * Math.PI) / 180)}
-                        ${0 - 40 * Math.sin((angle_upper * Math.PI) / 180)}
-                       ">
-                  </path>
-                  `;
-                })
+            ? hasGradient
+              ? svg`<use href="#gradient-slices" style="mask: url(#segments-mask); -webkit-mask: url(#segments-mask);" />`
+              : this.segments
+                  .slice()
+                  .sort((a, b) => a.lower! - b.lower!)
+                  .map((segment) => {
+                    const angle_lower = this._getLowerAngle(
+                      segment.lower!,
+                      this.min,
+                      this.max
+                    );
+                    const angle_upper = this._getUpperAngle(
+                      segment.upper!,
+                      this.min,
+                      this.max
+                    );
+                    return svg`
+                      <path
+                          stroke="${segment.color}"
+                          class="segment"
+                          d="M
+                            ${0 - 40 * Math.cos((angle_lower * Math.PI) / 180)}
+                            ${0 - 40 * Math.sin((angle_lower * Math.PI) / 180)}
+                           A 40 40 0 0 1
+                            ${0 - 40 * Math.cos((angle_upper * Math.PI) / 180)}
+                            ${0 - 40 * Math.sin((angle_upper * Math.PI) / 180)}
+                           ">
+                      </path>
+                      `;
+                  })
             : ``
         }
           ${
             dialVisible
-              ? svg`<path
-                class="dial ${
-                  this._updated && this.animation ? `animation` : ``
-                }"
-                style =${styleMap({
-                  stroke: `${gaugeValueColor}`,
-                  strokeDasharray: `${pathLength}`,
-                  strokeDashoffset: `${dashOffset}`,
-                })}
-                d="M -40 0 A 40 40 0 0 1 40 0">
-            </path>
-            `
+              ? hasGradient
+                ? svg`<use href="#gradient-slices" style="mask: url(#dial-mask); -webkit-mask: url(#dial-mask);" />`
+                : svg`<path
+                    class="dial ${
+                      this._updated && this.animation ? `animation` : ``
+                    }"
+                    style =${styleMap({
+                      stroke: `${gaugeValueColor}`,
+                      strokeDasharray: `${pathLength}`,
+                      strokeDashoffset: `${dashOffset}`,
+                    })}
+                    d="M -40 0 A 40 40 0 0 1 40 0">
+                </path>
+                `
               : ``
           }
           ${this.showNeedle ? this._renderNeedle() : ``}

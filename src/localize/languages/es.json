@@ -20,6 +20,7 @@
       "show_entity_name": "Mostrar nombre de la entidad",
       "show_min_max_values": "Mostrar valores mín. / máx.",
       "show_segment_labels": "Mostrar límites de segmentos",
+      "use_gradient": "Usar degradado de color",
       "needle_style": "Estilo de la aguja",
       "needle_style_default": "Predeterminado",
       "needle_style_classic": "Clásico",

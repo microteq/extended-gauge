@@ -202,46 +202,47 @@ After installing your Extended Gauge Card, edit your dashboard or create a new o
 
 ### Configuration
 
-| Field name | Description |
-| ---------- | ----------- |
-| *Entity* | First, you need to select an entity that contains the numeric value you want to display. As long as no entity is selected, demo values will be shown and will update every 5 seconds. |
-| *Title* | If you want the card to have a title, you can enter it in this field. |
-| *Minimum&nbsp;displayed&nbsp;value* | The value at which the gauge display begins. |
-| *Maximum&nbsp;displayed&nbsp;value* | The value at which the gauge display ends. |
-| *Color&nbsp;for&nbsp;value&nbsp;display* | The default background color when the needle is shown, or the color of the current value display if the needle is hidden. |
-| *Background&nbsp;color&nbsp;(no&nbsp;value)* | The default background color when the needle is shown, or the color of the current value display if the needle is hidden. |
-| *Display mode* | Selects how the gauge is rendered. Options: `gauge_and_needle` (full gauge with needle), `dial_only` (no needle), `dial_and_needle` (dial fill arc and needle shown at the same time). |
-| *Show entity name* | Toggle to show or hide the entity name below the value. |
-| *Show min&nbsp;/&nbsp;max values* | Toggle to show or hide the gauge’s minimum and maximum values. |
-| *Show&nbsp;segment&nbsp;thresholds* | Toggle to show or hide the segment threshold values. |
+| Field name                                   | Description                                                                                                                                                                            |
+|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| *Entity*                                     | First, you need to select an entity that contains the numeric value you want to display. As long as no entity is selected, demo values will be shown and will update every 5 seconds.  |
+| *Title*                                      | If you want the card to have a title, you can enter it in this field.                                                                                                                  |
+| *Minimum&nbsp;displayed&nbsp;value*          | The value at which the gauge display begins.                                                                                                                                           |
+| *Maximum&nbsp;displayed&nbsp;value*          | The value at which the gauge display ends.                                                                                                                                             |
+| *Color&nbsp;for&nbsp;value&nbsp;display*     | The default background color when the needle is shown, or the color of the current value display if the needle is hidden.                                                              |
+| *Background&nbsp;color&nbsp;(no&nbsp;value)* | The default background color when the needle is shown, or the color of the current value display if the needle is hidden.                                                              |
+| *Display mode*                               | Selects how the gauge is rendered. Options: `gauge_and_needle` (full gauge with needle), `dial_only` (no needle), `dial_and_needle` (dial fill arc and needle shown at the same time). |
+| *Use color gradient*                         | Toggle to smoothly transition between segment colors instead of using distinct solid color bands.                                                                                      |
+| *Show entity name*                           | Toggle to show or hide the entity name below the value.                                                                                                                                |
+| *Show min&nbsp;/&nbsp;max values*            | Toggle to show or hide the gauge’s minimum and maximum values.                                                                                                                         |
+| *Show&nbsp;segment&nbsp;thresholds*          | Toggle to show or hide the segment threshold values.                                                                                                                                   |
 <br />
 
 > **Note:** Older configs created before `display_mode` was introduced may still use the `show_needle` YAML option. It is deprecated but continues to work as a fallback when `display_mode` is not set. We recommend migrating to `display_mode`.
 
 ### Editing the entity
-To gain more control over how the entity value is displayed, click the edit button to the right of the selected entity Id.
+To gain more control over how the entity value is displayed, click the edit button to the right of the selected entity ID.
 
-| Field name | Description |
-| ---------- | ----------- |
-| *Name* | Give your entity a custom name. This name will be displayed below the value instead of the entity Id. |
-| *Unit&nbsp;of&nbsp;measurement* | The unit that should be displayed next to the value. |
-| *Conversion factor* | The value provided by the entity will be divided by this number. For example, if the entity provides power in watts, entering a conversion factor of 1000 will display the value in kilowatts. |
-| *Number of decimals* | The number of decimal places to be displayed. |
-| *Thousands separator* | The character to be used as the thousands separator. |
-| *Decimal separator* | The character to be used as the decimal separator. |
+| Field name                      | Description                                                                                                                                                                                    |
+|---------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| *Name*                          | Give your entity a custom name. This name will be displayed below the value instead of the entity ID.                                                                                          |
+| *Unit&nbsp;of&nbsp;measurement* | The unit that should be displayed next to the value.                                                                                                                                           |
+| *Conversion factor*             | The value provided by the entity will be divided by this number. For example, if the entity provides power in watts, entering a conversion factor of 1000 will display the value in kilowatts. |
+| *Number of decimals*            | The number of decimal places to be displayed.                                                                                                                                                  |
+| *Thousands separator*           | The character to be used as the thousands separator.                                                                                                                                           |
+| *Decimal separator*             | The character to be used as the decimal separator.                                                                                                                                             |
 <br />
 
 ### Editing the needle settings
 When *Display mode* is set to `gauge_and_needle` or `dial_and_needle`, click **Edit needle settings** to configure the needle appearance.
 
-| Field name | Description |
-| ---------- | ----------- |
-| *Needle style* | The visual style of the needle. Options: `default` (current arrow style), `classic` (original Home Assistant gauge needle), `icon` (a custom MDI icon). |
-| *Needle icon* | Only used when *Needle style* is set to `icon`. Select any MDI icon to use as the needle indicator. |
-| *Keep icon vertical* | Only used when *Needle style* is set to `icon`. When enabled, the icon stays upright and does not rotate with the gauge direction; it only moves along the gauge arc. When disabled, the icon rotates to follow the gauge bearing. |
-| *Icon size multiplier* | Only used when *Needle style* is set to `icon`. Scales the icon. `1` is the default size; `2` doubles it, `0.5` halves it. |
-| *Icon color* | Only used when *Needle style* is set to `icon`. Sets the fill color of the icon. |
-| *Icon background color* | Only used when *Needle style* is set to `icon`. Draws a filled circle behind the icon to make it stand out against the gauge arc. |
+| Field name              | Description                                                                                                                                                                                                                        |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| *Needle style*          | The visual style of the needle. Options: `default` (current arrow style), `classic` (original Home Assistant gauge needle), `icon` (a custom MDI icon).                                                                            |
+| *Needle icon*           | Only used when *Needle style* is set to `icon`. Select any MDI icon to use as the needle indicator.                                                                                                                                |
+| *Keep icon vertical*    | Only used when *Needle style* is set to `icon`. When enabled, the icon stays upright and does not rotate with the gauge direction; it only moves along the gauge arc. When disabled, the icon rotates to follow the gauge bearing. |
+| *Icon size multiplier*  | Only used when *Needle style* is set to `icon`. Scales the icon. `1` is the default size; `2` doubles it, `0.5` halves it.                                                                                                         |
+| *Icon color*            | Only used when *Needle style* is set to `icon`. Sets the fill color of the icon.                                                                                                                                                   |
+| *Icon background color* | Only used when *Needle style* is set to `icon`. Draws a filled circle behind the icon to make it stand out against the gauge arc.                                                                                                  |
 <br />
 
 **YAML example — classic needle style:**
@@ -278,13 +279,74 @@ main:
 ### Adding segments
 Add segments with threshold values to your gauge to highlight specific value ranges. Click “Add segment” or the plus icon to add a new segment. You can add as many segments as you like, but adding too many may reduce the gauge’s readability.
 
-| Field name | Description |
-| ---------- | ----------- |
-| *Title* | The title or name of the segment. This is not displayed and is for your reference only. To avoid confusion about the purpose of each segment when multiple segments are used, you can only add a new segment after you have given a name to the previous one.|
-| *Lower bound* | The lower bound of the segment. If not specified, the gauge's minimum value will be used by default. |
-| *Upper bound* | The upper bound of the segment. If not specified, the gauge's maximum value will be used by default. |
-| *Segment color* | The color in which the segment should be displayed. |
-| *Override&nbsp;value* | A text that will be shown instead of the entity’s value when it falls within the segment bounds. |
+| Field name            | Description                                                                                                                                                                                                                                                   |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| *Title*               | The title or name of the segment. This is not displayed and is for your reference only. To avoid confusion about the purpose of each segment when multiple segments are used, you can only add a new segment after you have given a name to the previous one. |
+| *Lower bound*         | The lower bound of the segment. If not specified, the gauge's minimum value will be used by default.                                                                                                                                                          |
+| *Upper bound*         | The upper bound of the segment. If not specified, the gauge's maximum value will be used by default.                                                                                                                                                          |
+| *Segment color*       | The color in which the segment should be displayed.                                                                                                                                                                                                           |
+| *Override&nbsp;value* | A text that will be shown instead of the entity’s value when it falls within the segment bounds.                                                                                                                                                              |
+<br />
+
+**YAML example — smooth AQI/rainbow gradient:**
+By enabling the *Use color gradient* option, the gauge will smoothly transition between segment colors instead of showing hard boundaries.
+
+![AQI gradient preview](assets/examples/aqi-gradient.svg)
+
+```yaml
+type: custom:extended-gauge-card
+entity: sensor.aqi
+main:
+  min_value: 0
+  max_value: 300
+  use_gradient: true
+segment_list:
+  - id: 1
+    title: Good
+    settings:
+      segment_lower: 0
+      segment_upper: 50
+      segment_color:
+        - 76
+        - 175
+        - 80
+  - id: 2
+    title: Moderate
+    settings:
+      segment_lower: 50
+      segment_upper: 100
+      segment_color:
+        - 255
+        - 235
+        - 59
+  - id: 3
+    title: Unhealthy for Sensitive Groups
+    settings:
+      segment_lower: 100
+      segment_upper: 150
+      segment_color:
+        - 255
+        - 152
+        - 0
+  - id: 4
+    title: Unhealthy
+    settings:
+      segment_lower: 150
+      segment_upper: 200
+      segment_color:
+        - 244
+        - 67
+        - 54
+  - id: 5
+    title: Very Unhealthy
+    settings:
+      segment_lower: 200
+      segment_upper: 300
+      segment_color:
+        - 156
+        - 39
+        - 176
+```
 <br />
 <br />
 
@@ -313,12 +375,3 @@ If this Home Assistant card is useful to you, please consider supporting this pr
 [![Sponsor me on GitHub](https://img.shields.io/badge/sponsor-me%20on%20GitHub-green)](https://github.com/sponsors/microteq)
 
 <a href="https://www.buymeacoffee.com/microteq" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="140" height="38" style="height: 38px !important;width: 140px !important;" ></a>
-
-
-
-
-
-
-
-
-

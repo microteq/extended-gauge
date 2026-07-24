@@ -556,6 +556,7 @@ function deriveGaugeState(opts: {
   showNeedle: boolean;
   showDial: boolean;
   showSegments: boolean;
+  useGradient?: boolean;
   segments?: { lower: number; upper: number; color: string }[];
   value: number;
   gaugeInfoColor: string;
@@ -564,6 +565,7 @@ function deriveGaugeState(opts: {
     showNeedle,
     showDial,
     showSegments,
+    useGradient,
     segments,
     gaugeInfoColor,
     value,
@@ -582,10 +584,14 @@ function deriveGaugeState(opts: {
   }
 
   return {
-    gaugeValueColor,
+    gaugeValueColor:
+      useGradient && segments && segments.length > 0
+        ? "url(#segment-gradient)"
+        : gaugeValueColor,
     dialVisible: showDial,
     needleVisible: showNeedle,
     segmentsVisible: !!segments && showSegments,
+    useGradient,
   };
 }
 
